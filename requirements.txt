@@ -1,23 +1,9 @@
-# Atualizar o requirements.txt para incluir todas as dependências necessárias
-cat > requirements.txt << 'EOL'
-streamlit==1.22.0
-numpy==1.23.0
-pandas==1.5.0
-matplotlib==3.7.0
-plotly==5.13.0
-Pillow==9.5.0
-scipy==1.10.0
-scikit-learn==1.2.0
-qiskit==0.43.0
-qiskit-aer==0.12.0
-fastapi==0.95.0
-uvicorn==0.21.0
-python-dotenv==1.0.0
-requests==2.28.0
-sympy==1.11.0
-folium==0.14.0
-streamlit-folium==0.15.1
-fpdf==1.7.2  # ✅ ADICIONANDO FPDF
-altair==4.2.0  # Para visualizações alternativas
-openpyxl==3.0.10  # Para manipulação de Excel
-EOL
+streamlit>=1.20
+numpy>=1.25
+pandas>=2.0
+matplotlib>=3.7
+plotly>=5.15
+scipy>=1.12
+scikit-learn>=1.3
+folium>=0.17
+streamlit-folium>=0.20
