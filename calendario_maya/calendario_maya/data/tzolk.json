@@ -1,0 +1,384 @@
+{
+  "nahuales": [
+    {
+      "id": 1,
+      "nome": "Imix",
+      "glifo": "🐉",
+      "significado_tradicional": "Dragão - O princípio criador, água primordial",
+      "significado_quantico": "Energia criativa primordial, potencial não manifestado",
+      "energia": "1",
+      "frequencia": "136.10 Hz",
+      "cor": "#4B0082",
+      "direcao": "Leste",
+      "elemento": "Água",
+      "animal": "Crocodilo"
+    },
+    {
+      "id": 2,
+      "nome": "Ik'",
+      "glifo": "🌬️",
+      "significado_tradicional": "Vento - Respiração divina, comunicação",
+      "significado_quantico": "Conexões energéticas, redes de informação",
+      "energia": "2",
+      "frequencia": "149.71 Hz",
+      "cor": "#87CEEB",
+      "direcao": "Norte",
+      "elemento": "Ar",
+      "animal": "Serpente de vento"
+    },
+    {
+      "id": 3,
+      "nome": "Ak'b'al",
+      "glifo": "🌑",
+      "significado_tradicional": "Noite - O mundo subterrâneo, escuridão fértil",
+      "significado_quantico": "Campo de potencialidade quântica",
+      "energia": "3",
+      "frequencia": "164.68 Hz",
+      "cor": "#00008B",
+      "direcao": "Oeste",
+      "elemento": "Terra",
+      "animal": "Morcego"
+    },
+    {
+      "id": 4,
+      "nome": "K'an",
+      "glifo": "🌱",
+      "significado_tradicional": "Semente - Fertilidade, abundância",
+      "significado_quantico": "Padrões fractais de crescimento",
+      "energia": "4",
+      "frequencia": "181.15 Hz",
+      "cor": "#32CD32",
+      "direcao": "Sul",
+      "elemento": "Fogo",
+      "animal": "Lagarto"
+    },
+    {
+      "id": 5,
+      "nome": "Chikchan",
+      "glifo": "🐍",
+      "significado_tradicional": "Serpente - Energia vital, Kundalini",
+      "significado_quantico": "DNA cósmico, filamentos de luz",
+      "energia": "5",
+      "frequencia": "199.26 Hz",
+      "cor": "#FF4500",
+      "direcao": "Leste",
+      "elemento": "Éter",
+      "animal": "Serpente emplumada"
+    },
+    {
+      "id": 6,
+      "nome": "Kimi",
+      "glifo": "💀",
+      "significado_tradicional": "Morte - Transformação, renascimento",
+      "significado_quantico": "Colapso de onda quântica",
+      "energia": "6",
+      "frequencia": "219.19 Hz",
+      "cor": "#708090",
+      "direcao": "Norte",
+      "elemento": "Água",
+      "animal": "Esqueleto"
+    },
+    {
+      "id": 7,
+      "nome": "Manik'",
+      "glifo": "🦌",
+      "significado_tradicional": "Cervo - Mão que cura, serviço",
+      "significado_quantico": "Ressonância harmônica",
+      "energia": "7",
+      "frequencia": "241.11 Hz",
+      "cor": "#228B22",
+      "direcao": "Oeste",
+      "elemento": "Terra",
+      "animal": "Veado"
+    },
+    {
+      "id": 8,
+      "nome": "Lamat",
+      "glifo": "🐇",
+      "significado_tradicional": "Coelho - Fertilidade, estrela da manhã",
+      "significado_quantico": "Emaranhamento quântico",
+      "energia": "8",
+      "frequencia": "265.22 Hz",
+      "cor": "#FFD700",
+      "direcao": "Sul",
+      "elemento": "Fogo",
+      "animal": "Coelho"
+    },
+    {
+      "id": 9,
+      "nome": "Muluk",
+      "glifo": "💧",
+      "significado_tradicional": "Água - Purificação, jade sagrado",
+      "significado_quantico": "Memória da água",
+      "energia": "9",
+      "frequencia": "291.74 Hz",
+      "cor": "#1E90FF",
+      "direcao": "Leste",
+      "elemento": "Éter",
+      "animal": "Peixe"
+    },
+    {
+      "id": 10,
+      "nome": "Ok",
+      "glifo": "🐕",
+      "significado_tradicional": "Cão - Lealdade, guia espiritual",
+      "significado_quantico": "Campos mórficos",
+      "energia": "10",
+      "frequencia": "320.91 Hz",
+      "cor": "#8B4513",
+      "direcao": "Norte",
+      "elemento": "Ar",
+      "animal": "Cão"
+    },
+    {
+      "id": 11,
+      "nome": "Chuwen",
+      "glifo": "🐒",
+      "significado_tradicional": "Macaco - Arte, tecelão do destino",
+      "significado_quantico": "Teia cósmica",
+      "energia": "11",
+      "frequencia": "353.00 Hz",
+      "cor": "#9370DB",
+      "direcao": "Oeste",
+      "elemento": "Terra",
+      "animal": "Macaco"
+    },
+    {
+      "id": 12,
+      "nome": "Eb'",
+      "glifo": "🛤️",
+      "significado_tradicional": "Caminho - Humanidade, jornada",
+      "significado_quantico": "Caminhos integrais",
+      "energia": "12",
+      "frequencia": "388.30 Hz",
+      "cor": "#696969",
+      "direcao": "Sul",
+      "elemento": "Fogo",
+      "animal": "Humanidade"
+    },
+    {
+      "id": 13,
+      "nome": "B'en",
+      "glifo": "🎋",
+      "significado_tradicional": "Cana - Governante, vara de poder",
+      "significado_quantico": "Antenas cósmicas",
+      "energia": "13",
+      "frequencia": "427.13 Hz",
+      "cor": "#2E8B57",
+      "direcao": "Leste",
+      "elemento": "Éter",
+      "animal": "Junco"
+    },
+    {
+      "id": 14,
+      "nome": "Ix",
+      "glifo": "🐆",
+      "significado_tradicional": "Jaguar - Magia, visão noturna",
+      "significado_quantico": "Realidade não-local",
+      "energia": "1",
+      "frequencia": "136.10 Hz",
+      "cor": "#8B0000",
+      "direcao": "Norte",
+      "elemento": "Terra",
+      "animal": "Jaguar"
+    },
+    {
+      "id": 15,
+      "nome": "Men",
+      "glifo": "🦅",
+      "significado_tradicional": "Águia - Visão elevada, mensageira",
+      "significado_quantico": "Visão holográfica",
+      "energia": "2",
+      "frequencia": "149.71 Hz",
+      "cor": "#4169E1",
+      "direcao": "Oeste",
+      "elemento": "Ar",
+      "animal": "Águia"
+    },
+    {
+      "id": 16,
+      "nome": "K'ib'",
+      "glifo": "🦉",
+      "significado_tradicional": "Coruja - Sabedoria, mistérios",
+      "significado_quantico": "Conhecimento oculto",
+      "energia": "3",
+      "frequencia": "164.68 Hz",
+      "cor": "#4B0082",
+      "direcao": "Sul",
+      "elemento": "Fogo",
+      "animal": "Coruja"
+    },
+    {
+      "id": 17,
+      "nome": "Kaban",
+      "glifo": "🌍",
+      "significado_tradicional": "Terra - Movimento, terremoto",
+      "significado_quantico": "Grade planetária",
+      "energia": "4",
+      "frequencia": "181.15 Hz",
+      "cor": "#D2691E",
+      "direcao": "Leste",
+      "elemento": "Éter",
+      "animal": "Tartaruga"
+    },
+    {
+      "id": 18,
+      "nome": "Etz'nab'",
+      "glifo": "🔪",
+      "significado_tradicional": "Facão - Espelho, verdade cortante",
+      "significado_quantico": "Reflexão quântica",
+      "energia": "5",
+      "frequencia": "199.26 Hz",
+      "cor": "#C0C0C0",
+      "direcao": "Norte",
+      "elemento": "Água",
+      "animal": "Obsidiana"
+    },
+    {
+      "id": 19,
+      "nome": "Kawak",
+      "glifo": "⛈️",
+      "significado_tradicional": "Tempestade - Renovação, fogo celestial",
+      "significado_quantico": "Reorganização energética",
+      "energia": "6",
+      "frequencia": "219.19 Hz",
+      "cor": "#9932CC",
+      "direcao": "Oeste",
+      "elemento": "Terra",
+      "animal": "Tempestade"
+    },
+    {
+      "id": 20,
+      "nome": "Ajaw",
+      "glifo": "☀️",
+      "significado_tradicional": "Sol - Iluminação, consciência",
+      "significado_quantico": "Ponto zero",
+      "energia": "7",
+      "frequencia": "241.11 Hz",
+      "cor": "#FF8C00",
+      "direcao": "Sul",
+      "elemento": "Fogo",
+      "animal": "Águia solar"
+    }
+  ],
+  "energias": [
+    {
+      "id": 1,
+      "nome": "Hun",
+      "significado": "Unidade - O princípio criador",
+      "tono": "Magnético",
+      "acao": "Atrair"
+    },
+    {
+      "id": 2,
+      "nome": "Ka",
+      "significado": "Polaridade - Dualidade criativa",
+      "tono": "Lunar",
+      "acao": "Estabilizar"
+    },
+    {
+      "id": 3,
+      "nome": "Ox",
+      "significado": "Ritmo - Pulsação cósmica",
+      "tono": "Elétrico",
+      "acao": "Ativar"
+    },
+    {
+      "id": 4,
+      "nome": "Kan",
+      "significado": "Forma - Estruturação",
+      "tono": "Auto-existente",
+      "acao": "Definir"
+    },
+    {
+      "id": 5,
+      "nome": "Ho'",
+      "significado": "Centro - Mandala vital",
+      "tono": "Entonado",
+      "acao": "Comandar"
+    },
+    {
+      "id": 6,
+      "nome": "Wak",
+      "significado": "Equilíbrio - Harmonia polar",
+      "tono": "Rítmico",
+      "acao": "Organizar"
+    },
+    {
+      "id": 7,
+      "nome": "Wuk",
+      "significado": "Resonância - Sincronicidade",
+      "tono": "Resonante",
+      "acao": "Canalizar"
+    },
+    {
+      "id": 8,
+      "nome": "Waxak",
+      "significado": "Integridade - Lei cósmica",
+      "tono": "Galáctico",
+      "acao": "Harmonizar"
+    },
+    {
+      "id": 9,
+      "nome": "B'olon",
+      "significado": "Poder - Força vital",
+      "tono": "Solar",
+      "acao": "Pulsar"
+    },
+    {
+      "id": 10,
+      "nome": "Lajun",
+      "significado": "Manifestação - Realização",
+      "tono": "Planetário",
+      "acao": "Manifestar"
+    },
+    {
+      "id": 11,
+      "nome": "Julajuj",
+      "significado": "Liberação - Dissolução",
+      "tono": "Espectral",
+      "acao": "Liberar"
+    },
+    {
+      "id": 12,
+      "nome": "Kab'lajuj",
+      "significado": "Cooperação - Inteligência coletiva",
+      "tono": "Cristal",
+      "acao": "Dedicar"
+    },
+    {
+      "id": 13,
+      "nome": "Oxlajuj",
+      "significado": "Transcendência - Além da forma",
+      "tono": "Cósmico",
+      "acao": "Transcender"
+    }
+  ],
+  "constantes": {
+    "ciclo_sagrado": 260,
+    "kin_por_uinal": 20,
+    "uinales_por_tun": 18,
+    "dias_por_tun": 360,
+    "baktun": 144000,
+    "calendario_maia_inicio": "3114 AEC",
+    "inicio_13_baktun": "2012 DEC",
+    "fim_13_baktun": "2024 DEC",
+    "base_frequencia": "136.10 Hz"
+  },
+  "glifos": {
+    "direcoes": {
+      "leste": "#FF0000",
+      "norte": "#0000FF",
+      "oeste": "#00FF00",
+      "sul": "#FFFF00",
+      "centro": "#FFFFFF"
+    },
+    "elementos": {
+      "terra": "#D2691E",
+      "agua": "#1E90FF",
+      "fogo": "#FF4500",
+      "ar": "#87CEEB",
+      "eter": "#9370DB"
+    }
+  }
+}

@@ -1,0 +1,126 @@
+{
+  "signos": [
+    {"id": 1, "nome": "Cipactli", "significado": "Crocodilo, criação"},
+    {"id": 2, "nome": "Ehecatl", "significado": "Vento, movimento"},
+    {"id": 3, "nome": "Calli", "significado": "Casa, proteção"},
+    {"id": 4, "nome": "Cuetzpalin", "significado": "Lagarto, adaptação"},
+    {"id": 5, "nome": "Coatl", "significado": "Serpente, sabedoria"},
+    {"id": 6, "nome": "Miquiztli", "significado": "Morte, transformação"},
+    {"id": 7, "nome": "Mazatl", "significado": "Cervo, caminho"},
+    {"id": 8, "nome": "Tochtli", "significado": "Coelho, fertilidade"},
+    {"id": 9, "nome": "Atl", "significado": "Água, purificação"},
+    {"id": 10, "nome": "Itzcuintli", "significado": "Cão, lealdade"},
+    {"id": 11, "nome": "Ozomatli", "significado": "Macaco, alegria"},
+    {"id": 12, "nome": "Malinalli", "significado": "Grama, flexibilidade"},
+    {"id": 13, "nome": "Acatl", "significado": "Cana, verdade"},
+    {"id": 14, "nome": "Ocelotl", "significado": "Jaguar, poder"},
+    {"id": 15, "nome": "Cuauhtli", "significado": "Águia, visão"},
+    {"id": 16, "nome": "Cozcacuauhtli", "significado": "Abutre, paciência"},
+    {"id": 17, "nome": "Ollin", "significado": "Movimento, terremoto"},
+    {"id": 18, "nome": "Tecpatl", "significado": "Pederneira, sacrifício"},
+    {"id": 19, "nome": "Quiahuitl", "significado": "Chuva, renovação"},
+    {"id": 20, "nome": "Xochitl", "significado": "Flor, beleza"}
+  ],
+  "trecenas": [
+    {
+      "id": 1,
+      "signos": [1,2,3,4,5,6,7,8,9,10,11,12,13],
+      "significado": "Criação - O início de tudo"
+    },
+    {
+      "id": 2,
+      "signos": [14,15,16,17,18,19,20,1,2,3,4,5,6],
+      "significado": "Transformação - Mudanças necessárias"
+    },
+    {
+      "id": 3,
+      "signos": [7,8,9,10,11,12,13,14,15,16,17,18,19],
+      "significado": "Comunicação - Troca de energias"
+    },
+    {
+      "id": 4,
+      "signos": [20,1,2,3,4,5,6,7,8,9,10,11,12],
+      "significado": "Estabilidade - Bases sólidas"
+    },
+    {
+      "id": 5,
+      "signos": [13,14,15,16,17,18,19,20,1,2,3,4,5],
+      "significado": "Desafio - Testes de força"
+    },
+    {
+      "id": 6,
+      "signos": [6,7,8,9,10,11,12,13,14,15,16,17,18],
+      "significado": "Equilíbrio - Harmonia interior"
+    },
+    {
+      "id": 7,
+      "signos": [19,20,1,2,3,4,5,6,7,8,9,10,11],
+      "significado": "Reflexão - Olhar para dentro"
+    },
+    {
+      "id": 8,
+      "signos": [12,13,14,15,16,17,18,19,20,1,2,3,4],
+      "significado": "Intensidade - Paixão e força"
+    },
+    {
+      "id": 9,
+      "signos": [5,6,7,8,9,10,11,12,13,14,15,16,17],
+      "significado": "Paciencia - Espera pelo momento certo"
+    },
+    {
+      "id": 10,
+      "signos": [18,19,20,1,2,3,4,5,6,7,8,9,10],
+      "significado": "Manifestação - Trazer à realidade"
+    },
+    {
+      "id": 11,
+      "signos": [11,12,13,14,15,16,17,18,19,20,1,2,3],
+      "significado": "Iluminação - Sabedoria superior"
+    },
+    {
+      "id": 12,
+      "signos": [4,5,6,7,8,9,10,11,12,13,14,15,16],
+      "significado": "Libertação - Quebrar cadeias"
+    },
+    {
+      "id": 13,
+      "signos": [17,18,19,20,1,2,3,4,5,6,7,8,9],
+      "significado": "Transcendência - Ir além"
+    },
+    {
+      "id": 14,
+      "signos": [10,11,12,13,14,15,16,17,18,19,20,1,2],
+      "significado": "Sacrifício - Dar para receber"
+    },
+    {
+      "id": 15,
+      "signos": [3,4,5,6,7,8,9,10,11,12,13,14,15],
+      "significado": "Cura - Restauração energética"
+    },
+    {
+      "id": 16,
+      "signos": [16,17,18,19,20,1,2,3,4,5,6,7,8],
+      "significado": "Magia - O invisível se manifesta"
+    },
+    {
+      "id": 17,
+      "signos": [9,10,11,12,13,14,15,16,17,18,19,20,1],
+      "significado": "Visão - Clareza de propósito"
+    },
+    {
+      "id": 18,
+      "signos": [2,3,4,5,6,7,8,9,10,11,12,13,14],
+      "significado": "Renovação - Ciclos que se completam"
+    },
+    {
+      "id": 19,
+      "signos": [15,16,17,18,19,20,1,2,3,4,5,6,7],
+      "significado": "Expressão - Criatividade em ação"
+    },
+    {
+      "id": 20,
+      "signos": [8,9,10,11,12,13,14,15,16,17,18,19,20],
+      "significado": "Celebração - Alegria da realização"
+    }
+  ]
+}

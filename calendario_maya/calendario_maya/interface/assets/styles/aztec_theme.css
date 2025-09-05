@@ -1,0 +1,10 @@
+/* aztec_theme.qss */
+QMainWindow {
+    background: url(:/images/aztec_bg.jpg);
+}
+
+QTabBar::tab {
+    background: #3d0000;
+    color: #950101;
+    padding: 10px;
+}

@@ -1,0 +1,882 @@
+2025-05-23 01:29:23,160 - root - INFO - - Tzolk'in: 20 nahuales
+2025-05-23 01:31:25,596 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 01:31:27,957 - root - INFO - 📦 Versão do sistema: 3.0
+2025-05-23 01:31:27,961 - root - INFO - - Tzolk'in: 20 nahuales
+2025-05-23 01:31:27,963 - root - CRITICAL - ❌ Falha crítica: 'signos'
+2025-05-23 01:33:17,532 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 01:33:18,812 - root - INFO - 📦 Versão do sistema: 3.0
+2025-05-23 01:33:18,813 - root - INFO - - Tzolk'in: 20 nahuales
+2025-05-23 01:33:18,814 - root - INFO - - Tonalpohualli: 20 signos
+2025-05-23 01:33:18,815 - root - WARNING - ⚠️ Verificação astronômica incompleta: No module named 'core.astronomy'
+2025-05-23 01:33:19,183 - root - CRITICAL - Falha crítica: 'MainWindow' object has no attribute 'status_bar'
+Traceback (most recent call last):
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 70, in init_content_widgets
+    self.glyph_viewer = GlyphViewer(self.connector)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\widgets\glyph_viewer.py", line 9, in __init__
+    super().__init__(parent)
+TypeError: QWidget(parent: Optional[QWidget] = None, flags: Qt.WindowType = Qt.WindowFlags()): argument 1 has unexpected type 'Connector'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\main.py", line 165, in main
+    window = MainWindow(connector)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 27, in __init__
+    self.setup_ui()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 56, in setup_ui
+    self.init_content_widgets()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 85, in init_content_widgets
+    self.show_error(f"Erro ao carregar widgets: {str(e)}")
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 198, in show_error
+    self.status_bar.showMessage(message, 5000)
+    ^^^^^^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'status_bar'
+2025-05-23 01:39:46,768 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 01:39:48,216 - root - INFO - 📦 Versão do sistema: 3.0
+2025-05-23 01:39:48,217 - root - INFO - - Tzolk'in: 20 nahuales
+2025-05-23 01:39:48,221 - root - INFO - - Tonalpohualli: 20 signos
+2025-05-23 01:39:48,223 - root - WARNING - ⚠️ Verificação astronômica incompleta: No module named 'core.astronomy'
+2025-05-23 01:39:48,347 - root - CRITICAL - Falha crítica: 'MainWindow' object has no attribute 'status_bar'
+Traceback (most recent call last):
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 70, in init_content_widgets
+    self.glyph_viewer = GlyphViewer(self.connector)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\widgets\glyph_viewer.py", line 9, in __init__
+    super().__init__(parent)
+TypeError: QWidget(parent: Optional[QWidget] = None, flags: Qt.WindowType = Qt.WindowFlags()): argument 1 has unexpected type 'Connector'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\main.py", line 165, in main
+    window = MainWindow(connector)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 27, in __init__
+    self.setup_ui()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 56, in setup_ui
+    self.init_content_widgets()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 85, in init_content_widgets
+    self.show_error(f"Erro ao carregar widgets: {str(e)}")
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 198, in show_error
+    self.status_bar.showMessage(message, 5000)
+    ^^^^^^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'status_bar'
+2025-05-23 01:43:10,612 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 01:43:12,034 - root - INFO - 📦 Versão do sistema: 3.0
+2025-05-23 01:43:12,035 - root - INFO - - Tzolk'in: 20 nahuales
+2025-05-23 01:43:12,038 - root - INFO - - Tonalpohualli: 20 signos
+2025-05-23 01:43:12,040 - root - WARNING - ⚠️ Verificação astronômica incompleta: No module named 'core.astronomy'
+2025-05-23 01:43:12,154 - root - CRITICAL - Falha crítica: 'MainWindow' object has no attribute 'status_bar'
+Traceback (most recent call last):
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 70, in init_content_widgets
+    self.glyph_viewer = GlyphViewer(self.connector)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\widgets\glyph_viewer.py", line 9, in __init__
+    super().__init__(parent)
+TypeError: QWidget(parent: Optional[QWidget] = None, flags: Qt.WindowType = Qt.WindowFlags()): argument 1 has unexpected type 'Connector'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\main.py", line 165, in main
+    window = MainWindow(connector)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 27, in __init__
+    self.setup_ui()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 56, in setup_ui
+    self.init_content_widgets()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 85, in init_content_widgets
+    self.show_error(f"Erro ao carregar widgets: {str(e)}")
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 198, in show_error
+    self.status_bar.showMessage(message, 5000)
+    ^^^^^^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'status_bar'
+2025-05-23 01:43:45,714 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 01:43:47,009 - root - INFO - 📦 Versão do sistema: 3.0
+2025-05-23 01:43:47,010 - root - INFO - - Tzolk'in: 20 nahuales
+2025-05-23 01:43:47,012 - root - INFO - - Tonalpohualli: 20 signos
+2025-05-23 01:43:47,015 - root - WARNING - ⚠️ Verificação astronômica incompleta: No module named 'core.astronomy'
+2025-05-23 01:43:47,131 - root - CRITICAL - Falha crítica: 'MainWindow' object has no attribute 'status_bar'
+Traceback (most recent call last):
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 70, in init_content_widgets
+    self.glyph_viewer = GlyphViewer(self.connector)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\widgets\glyph_viewer.py", line 9, in __init__
+    super().__init__(parent)
+TypeError: QWidget(parent: Optional[QWidget] = None, flags: Qt.WindowType = Qt.WindowFlags()): argument 1 has unexpected type 'Connector'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\main.py", line 165, in main
+    window = MainWindow(connector)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 27, in __init__
+    self.setup_ui()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 56, in setup_ui
+    self.init_content_widgets()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 85, in init_content_widgets
+    self.show_error(f"Erro ao carregar widgets: {str(e)}")
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 198, in show_error
+    self.status_bar.showMessage(message, 5000)
+    ^^^^^^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'status_bar'
+2025-05-23 01:45:26,741 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 01:45:28,028 - root - INFO - 📦 Versão do sistema: 3.0
+2025-05-23 01:45:28,029 - root - INFO - - Tzolk'in: 20 nahuales
+2025-05-23 01:45:28,031 - root - INFO - - Tonalpohualli: 20 signos
+2025-05-23 01:45:28,034 - root - WARNING - ⚠️ Verificação astronômica incompleta: No module named 'core.astronomy'
+2025-05-23 01:45:28,150 - root - CRITICAL - Falha crítica: 'MainWindow' object has no attribute 'status_bar'
+Traceback (most recent call last):
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 70, in init_content_widgets
+    self.glyph_viewer = GlyphViewer(self.connector)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\widgets\glyph_viewer.py", line 9, in __init__
+    super().__init__(parent)
+TypeError: QWidget(parent: Optional[QWidget] = None, flags: Qt.WindowType = Qt.WindowFlags()): argument 1 has unexpected type 'Connector'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\main.py", line 194, in main
+    window = MainWindow(connector)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 27, in __init__
+    self.setup_ui()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 56, in setup_ui
+    self.init_content_widgets()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 85, in init_content_widgets
+    self.show_error(f"Erro ao carregar widgets: {str(e)}")
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 198, in show_error
+    self.status_bar.showMessage(message, 5000)
+    ^^^^^^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'status_bar'
+2025-05-23 01:46:27,215 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 01:46:28,512 - root - INFO - 📦 Versão do sistema: 3.0
+2025-05-23 01:46:28,513 - root - INFO - - Tzolk'in: 20 nahuales
+2025-05-23 01:46:28,515 - root - INFO - - Tonalpohualli: 20 signos
+2025-05-23 01:46:28,635 - root - CRITICAL - Falha crítica: 'MainWindow' object has no attribute 'status_bar'
+Traceback (most recent call last):
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 70, in init_content_widgets
+    self.glyph_viewer = GlyphViewer(self.connector)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\widgets\glyph_viewer.py", line 9, in __init__
+    super().__init__(parent)
+TypeError: QWidget(parent: Optional[QWidget] = None, flags: Qt.WindowType = Qt.WindowFlags()): argument 1 has unexpected type 'Connector'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\main.py", line 185, in main
+    window = MainWindow(connector)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 27, in __init__
+    self.setup_ui()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 56, in setup_ui
+    self.init_content_widgets()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 85, in init_content_widgets
+    self.show_error(f"Erro ao carregar widgets: {str(e)}")
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 198, in show_error
+    self.status_bar.showMessage(message, 5000)
+    ^^^^^^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'status_bar'
+2025-05-23 02:03:26,062 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 02:03:27,377 - root - INFO - 📦 Versão: 3.0
+2025-05-23 02:03:27,377 - root - INFO - - Nahuales: 20
+2025-05-23 02:03:27,380 - root - CRITICAL - ERRO: 'signos'
+Traceback (most recent call last):
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\main.py", line 188, in main
+    logging.info(f"- Signos: {len(connector.tonal_data['signos'])}")
+                                  ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+KeyError: 'signos'
+2025-05-23 02:13:15,728 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 02:13:17,182 - root - INFO - 📦 Versão: 3.0
+2025-05-23 02:13:17,183 - root - INFO - - Nahuales: 20
+2025-05-23 02:13:17,184 - root - INFO - - Signos: 20
+2025-05-23 02:13:17,246 - root - CRITICAL - ERRO: CalendarWidget.__init__() got an unexpected keyword argument 'connector'
+Traceback (most recent call last):
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\main.py", line 193, in main
+    window = MainWindow(connector)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 27, in __init__
+    self.setup_ui()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 50, in setup_ui
+    self.init_content_widgets()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 55, in init_content_widgets
+    self.calendar_widget = CalendarWidget(parent=self, connector=self.connector)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: CalendarWidget.__init__() got an unexpected keyword argument 'connector'
+2025-05-23 02:26:45,570 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 02:26:46,865 - root - INFO - 📦 Versão: 3.0
+2025-05-23 02:26:46,866 - root - INFO - - Nahuales: 20
+2025-05-23 02:26:46,869 - root - INFO - - Signos: 20
+2025-05-23 02:26:46,953 - root - CRITICAL - ERRO: 'builtin_function_or_method' object has no attribute 'addWidget'
+Traceback (most recent call last):
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\main.py", line 193, in main
+    window = MainWindow(connector)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 27, in __init__
+    self.setup_ui()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 50, in setup_ui
+    self.init_content_widgets()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 55, in init_content_widgets
+    self.calendar_widget = CalendarWidget(parent=self, connector=self.connector)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\widgets\calendar_widget.py", line 51, in __init__
+    self.init_ui()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\widgets\calendar_widget.py", line 197, in init_ui
+    self.layout.addWidget(self.calendar)
+    ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'builtin_function_or_method' object has no attribute 'addWidget'
+2025-05-23 02:30:14,678 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 02:30:15,963 - root - INFO - 📦 Versão: 3.0
+2025-05-23 02:30:15,964 - root - INFO - - Nahuales: 20
+2025-05-23 02:30:15,964 - root - INFO - - Signos: 20
+2025-05-23 02:30:16,090 - root - CRITICAL - ERRO: 'Connector' object has no attribute 'get_historical_events'
+Traceback (most recent call last):
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\main.py", line 193, in main
+    window = MainWindow(connector)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 27, in __init__
+    self.setup_ui()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 50, in setup_ui
+    self.init_content_widgets()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 59, in init_content_widgets
+    self.timeline = TimelineWidget(self.connector)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\utils\timeline.py", line 26, in __init__
+    self.load_online_events()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\utils\timeline.py", line 150, in load_online_events
+    events = self.connector.get_historical_events(1000, 1500)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Connector' object has no attribute 'get_historical_events'
+2025-05-23 02:38:11,193 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 02:38:12,545 - root - INFO - 📦 Versão: 3.0
+2025-05-23 02:38:12,546 - root - INFO - - Nahuales: 20
+2025-05-23 02:38:12,548 - root - INFO - - Signos: 20
+2025-05-23 02:38:12,681 - root - CRITICAL - ERRO: 'TimelineWidget' object has no attribute 'display_events'
+Traceback (most recent call last):
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\utils\timeline.py", line 157, in load_online_events
+    self.display_events(events or self.get_fallback_events())
+    ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'TimelineWidget' object has no attribute 'display_events'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\main.py", line 193, in main
+    window = MainWindow(connector)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 27, in __init__
+    self.setup_ui()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 50, in setup_ui
+    self.init_content_widgets()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 59, in init_content_widgets
+    self.timeline = TimelineWidget(self.connector)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\utils\timeline.py", line 26, in __init__
+    self.load_online_events()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\utils\timeline.py", line 161, in load_online_events
+    self.display_events(self.get_fallback_events())
+    ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'TimelineWidget' object has no attribute 'display_events'
+2025-05-23 02:44:31,477 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 02:44:32,798 - root - INFO - 📦 Versão: 3.0
+2025-05-23 02:44:32,799 - root - INFO - - Nahuales: 20
+2025-05-23 02:44:32,801 - root - INFO - - Signos: 20
+2025-05-23 02:44:32,931 - root - CRITICAL - ERRO: CosmosViewBase.__init__() missing 1 required positional argument: 'connector'
+Traceback (most recent call last):
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\main.py", line 193, in main
+    window = MainWindow(connector)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 27, in __init__
+    self.setup_ui()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 50, in setup_ui
+    self.init_content_widgets()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 62, in init_content_widgets
+    self.cosmos_view = CosmosView(self.connector)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\widgets\cosmos_view.py", line 29, in __init__
+    super().__init__()
+TypeError: CosmosViewBase.__init__() missing 1 required positional argument: 'connector'
+2025-05-23 02:49:36,681 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 02:49:37,996 - root - INFO - 📦 Versão: 3.0
+2025-05-23 02:49:37,997 - root - INFO - - Nahuales: 20
+2025-05-23 02:49:37,999 - root - INFO - - Signos: 20
+2025-05-23 02:49:38,147 - root - CRITICAL - ERRO: 'MainWindow' object has no attribute 'maya_sidebar'
+Traceback (most recent call last):
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\main.py", line 193, in main
+    window = MainWindow(connector)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 28, in __init__
+    self.setup_connections()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 80, in setup_connections
+    self.maya_sidebar.menu_changed.connect(self.change_content)
+    ^^^^^^^^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'maya_sidebar'
+2025-05-23 02:57:44,569 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 02:57:45,920 - root - INFO - 📦 Versão: 3.0
+2025-05-23 02:57:45,921 - root - INFO - - Nahuales: 20
+2025-05-23 02:57:45,926 - root - INFO - - Signos: 20
+2025-05-23 02:57:45,987 - root - CRITICAL - ERRO: 'MayanSidebar' object has no attribute 'addItems'
+Traceback (most recent call last):
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\main.py", line 193, in main
+    window = MainWindow(connector)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 27, in __init__
+    self.setup_ui()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 47, in setup_ui
+    self.maya_sidebar = MayanSidebar()
+                        ^^^^^^^^^^^^^^
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\maya_sidebar.py", line 11, in __init__
+    self.setup_menu()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\maya_sidebar.py", line 35, in setup_menu
+    self.addItems([
+    ^^^^^^^^^^^^^
+AttributeError: 'MayanSidebar' object has no attribute 'addItems'
+2025-05-23 03:01:59,609 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 03:02:00,931 - root - INFO - 📦 Versão: 3.0
+2025-05-23 03:02:00,932 - root - INFO - - Nahuales: 20
+2025-05-23 03:02:00,934 - root - INFO - - Signos: 20
+2025-05-23 03:02:01,080 - root - CRITICAL - ERRO: 'TimelineWidget' object has no attribute 'sync_with_date'
+Traceback (most recent call last):
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\main.py", line 193, in main
+    window = MainWindow(connector)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 28, in __init__
+    self.setup_connections()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 104, in setup_connections
+    self.timeline.sync_with_date)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'TimelineWidget' object has no attribute 'sync_with_date'
+2025-05-23 03:14:38,817 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 03:14:40,377 - root - INFO - 📦 Versão: 3.0
+2025-05-23 03:14:40,378 - root - INFO - - Nahuales: 20
+2025-05-23 03:14:40,380 - root - INFO - - Signos: 20
+2025-05-23 03:14:40,561 - root - CRITICAL - ERRO: 'CosmosView' object has no attribute 'update_position'
+Traceback (most recent call last):
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\main.py", line 193, in main
+    window = MainWindow(connector)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 28, in __init__
+    self.setup_connections()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 106, in setup_connections
+    self.cosmos_view.update_position)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CosmosView' object has no attribute 'update_position'
+2025-05-23 10:12:32,600 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 10:12:34,073 - root - INFO - 📦 Versão: 3.0
+2025-05-23 10:12:34,075 - root - INFO - - Nahuales: 20
+2025-05-23 10:12:34,076 - root - INFO - - Signos: 20
+2025-05-23 10:12:34,228 - root - CRITICAL - ERRO: 'CalendarWidget' object has no attribute 'get_date'
+Traceback (most recent call last):
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\main.py", line 193, in main
+    window = MainWindow(connector)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 29, in __init__
+    self.post_init()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 112, in post_init
+    self.update_system_date()  # Atualiza com data inicial
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 150, in update_system_date
+    date = date or self.calendar_widget.get_date()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CalendarWidget' object has no attribute 'get_date'
+2025-05-23 10:31:04,283 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 10:31:05,619 - root - INFO - 📦 Versão: 3.0
+2025-05-23 10:31:05,620 - root - INFO - - Nahuales: 20
+2025-05-23 10:31:05,622 - root - INFO - - Signos: 20
+2025-05-23 10:31:07,746 - root - INFO - 🚀 UI carregada com sucesso
+2025-05-23 10:31:46,014 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 10:31:47,314 - root - INFO - 📦 Versão: 3.0
+2025-05-23 10:31:47,315 - root - INFO - - Nahuales: 20
+2025-05-23 10:31:47,317 - root - INFO - - Signos: 20
+2025-05-23 10:31:47,866 - root - INFO - 🚀 UI carregada com sucesso
+2025-05-23 10:32:25,614 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 10:32:26,911 - root - INFO - 📦 Versão: 3.0
+2025-05-23 10:32:26,912 - root - INFO - - Nahuales: 20
+2025-05-23 10:32:26,914 - root - INFO - - Signos: 20
+2025-05-23 10:32:27,436 - root - INFO - 🚀 UI carregada com sucesso
+2025-05-23 10:35:21,660 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 10:35:22,995 - root - INFO - 📦 Versão: 3.0
+2025-05-23 10:35:22,995 - root - INFO - - Nahuales: 20
+2025-05-23 10:35:22,995 - root - INFO - - Signos: 20
+2025-05-23 10:35:23,665 - root - INFO - 🚀 UI carregada com sucesso
+2025-05-23 10:47:15,566 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 10:47:16,794 - root - INFO - 📦 Versão: 3.0
+2025-05-23 10:47:16,794 - root - INFO - - Nahuales: 20
+2025-05-23 10:47:16,809 - root - INFO - - Signos: 20
+2025-05-23 10:47:16,934 - root - CRITICAL - ERRO: 'int' object is not callable
+Traceback (most recent call last):
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\main.py", line 193, in main
+    window = MainWindow(connector)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 27, in __init__
+    self.setup_ui()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 58, in setup_ui
+    self.init_content_widgets()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 66, in init_content_widgets
+    self.calendar_widget = CalendarWidget(parent=self, connector=self.connector)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\widgets\calendar_widget.py", line 108, in __init__
+    self._on_date_changed() # Trigger initial update
+    ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\widgets\calendar_widget.py", line 257, in _on_date_changed
+    long_count_representation = f"{py_date.year()}.{py_date.month}.{py_date.day} (Placeholder LC)"
+                                   ^^^^^^^^^^^^^^
+TypeError: 'int' object is not callable
+2025-05-23 11:28:14,946 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 11:28:16,234 - root - CRITICAL - ERRO: CalendarioCosmico.__init__() takes 1 positional argument but 4 were given
+Traceback (most recent call last):
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\main.py", line 175, in main
+    connector = Connector()
+                ^^^^^^^^^^^
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\core\connector.py", line 39, in __init__
+    self.calendario_cosmico = CalendarioCosmico(self.tzolk_data, self.tonal_data, self.long_count_data)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: CalendarioCosmico.__init__() takes 1 positional argument but 4 were given
+2025-05-23 11:32:31,052 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 11:32:32,349 - root - INFO - 📦 Versão: 3.0
+2025-05-23 11:32:32,351 - root - INFO - - Nahuales: 20
+2025-05-23 11:32:32,352 - root - INFO - - Signos: 20
+2025-05-23 11:32:33,142 - root - INFO - 🚀 UI carregada com sucesso
+2025-05-23 11:55:38,315 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 11:55:39,630 - root - INFO - 📦 Versão: 3.0
+2025-05-23 11:55:39,632 - root - INFO - - Nahuales: 20
+2025-05-23 11:55:39,633 - root - INFO - - Signos: 20
+2025-05-23 11:55:39,748 - root - CRITICAL - ERRO: No module named 'config.styles'
+Traceback (most recent call last):
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\main.py", line 200, in main
+    window = MainWindow(connector)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 27, in __init__
+    self.setup_ui()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 58, in setup_ui
+    self.init_content_widgets()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 64, in init_content_widgets
+    self.calendar_widget = CalendarWidget(connector=self.connector)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\widgets\calendar_widget.py", line 99, in __init__
+    self.load_styles()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\widgets\calendar_widget.py", line 248, in load_styles
+    from config.styles import load_styles  # Importa a função de styles.py
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'config.styles'
+2025-05-23 12:38:28,198 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 12:38:29,456 - root - INFO - 📦 Versão: 3.0
+2025-05-23 12:38:29,457 - root - INFO - - Nahuales: 20
+2025-05-23 12:38:29,458 - root - INFO - - Signos: 20
+2025-05-23 12:38:29,509 - root - CRITICAL - ERRO: name 'StyleManager' is not defined
+Traceback (most recent call last):
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\main.py", line 200, in main
+    window = MainWindow(connector)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 26, in __init__
+    self.style_manager = StyleManager(self)
+                         ^^^^^^^^^^^^
+NameError: name 'StyleManager' is not defined
+2025-05-23 15:46:13,030 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 15:46:14,313 - root - INFO - 📦 Versão: 3.0
+2025-05-23 15:46:14,314 - root - INFO - - Nahuales: 20
+2025-05-23 15:46:14,315 - root - INFO - - Signos: 20
+2025-05-23 15:46:14,369 - root - CRITICAL - ERRO: name 'StyleManager' is not defined
+Traceback (most recent call last):
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\main.py", line 200, in main
+    window = MainWindow(connector)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 24, in __init__
+    self.style_manager = StyleManager()
+                         ^^^^^^^^^^^^
+NameError: name 'StyleManager' is not defined
+2025-05-23 15:52:45,393 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 15:52:46,693 - root - INFO - 📦 Versão: 3.0
+2025-05-23 15:52:46,694 - root - INFO - - Nahuales: 20
+2025-05-23 15:52:46,695 - root - INFO - - Signos: 20
+2025-05-23 15:52:46,863 - root - CRITICAL - ERRO: 'MainWindow' object has no attribute 'theme_changed'
+Traceback (most recent call last):
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\main.py", line 200, in main
+    window = MainWindow(connector)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 29, in __init__
+    self.setup_connections()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 88, in setup_connections
+    self.theme_changed.connect(self.change_theme)
+    ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'theme_changed'
+2025-05-23 15:57:50,159 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 15:57:51,452 - root - INFO - 📦 Versão: 3.0
+2025-05-23 15:57:51,454 - root - INFO - - Nahuales: 20
+2025-05-23 15:57:51,457 - root - INFO - - Signos: 20
+2025-05-23 15:57:51,625 - root - CRITICAL - ERRO: 'MainWindow' object has no attribute 'theme_changed'
+Traceback (most recent call last):
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\main.py", line 200, in main
+    window = MainWindow(connector)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 28, in __init__
+    self.setup_connections()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 91, in setup_connections
+    self.maya_sidebar.theme_changed.connect(self.theme_changed.emit)
+                                            ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'theme_changed'
+2025-05-23 15:59:02,149 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 15:59:03,418 - root - INFO - 📦 Versão: 3.0
+2025-05-23 15:59:03,419 - root - INFO - - Nahuales: 20
+2025-05-23 15:59:03,420 - root - INFO - - Signos: 20
+2025-05-23 15:59:03,583 - root - CRITICAL - ERRO: 'MainWindow' object has no attribute 'theme_changed'
+Traceback (most recent call last):
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\main.py", line 200, in main
+    window = MainWindow(connector)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 28, in __init__
+    self.setup_connections()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 87, in setup_connections
+    self.theme_changed.connect(self.change_theme)
+    ^^^^^^^^^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'theme_changed'
+2025-05-23 16:02:12,596 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 16:02:13,897 - root - INFO - 📦 Versão: 3.0
+2025-05-23 16:02:13,898 - root - INFO - - Nahuales: 20
+2025-05-23 16:02:13,899 - root - INFO - - Signos: 20
+2025-05-23 16:02:14,064 - root - CRITICAL - ERRO: name 'QApplication' is not defined
+Traceback (most recent call last):
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\main.py", line 200, in main
+    window = MainWindow(connector)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 34, in __init__
+    self.style_manager = StyleManager(QApplication.instance())
+                                      ^^^^^^^^^^^^
+NameError: name 'QApplication' is not defined
+2025-05-23 16:09:21,715 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 16:09:23,020 - root - INFO - 📦 Versão: 3.0
+2025-05-23 16:09:23,021 - root - INFO - - Nahuales: 20
+2025-05-23 16:09:23,024 - root - INFO - - Signos: 20
+2025-05-23 16:09:23,778 - root - INFO - 🚀 UI carregada com sucesso
+2025-05-23 16:33:02,829 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 16:33:04,129 - root - INFO - 📦 Versão: 3.0
+2025-05-23 16:33:04,131 - root - INFO - - Nahuales: 20
+2025-05-23 16:33:04,132 - root - INFO - - Signos: 20
+2025-05-23 16:33:04,301 - root - CRITICAL - ERRO: No module named 'PyQt6.QtCharts'
+Traceback (most recent call last):
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\main.py", line 200, in main
+    window = MainWindow(connector)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 31, in __init__
+    self.setup_ui()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 73, in setup_ui
+    self.init_content_widgets()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 89, in init_content_widgets
+    from interface.widgets.math_viewer import MathViewer
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\widgets\math_viewer.py", line 3, in <module>
+    from PyQt6.QtCharts import QChart, QChartView, QLineSeries
+ModuleNotFoundError: No module named 'PyQt6.QtCharts'
+2025-05-23 16:47:55,644 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 16:47:56,921 - root - INFO - 📦 Versão: 3.0
+2025-05-23 16:47:56,923 - root - INFO - - Nahuales: 20
+2025-05-23 16:47:56,924 - root - INFO - - Signos: 20
+2025-05-23 16:47:57,226 - root - CRITICAL - ERRO: name 'QPushButton' is not defined
+Traceback (most recent call last):
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\main.py", line 200, in main
+    window = MainWindow(connector)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 31, in __init__
+    self.setup_ui()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 73, in setup_ui
+    self.init_content_widgets()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 100, in init_content_widgets
+    self._connect_advanced_features()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 114, in _connect_advanced_features
+    btn = self.findChild(QPushButton, 'venusCycleBtn')
+                         ^^^^^^^^^^^
+NameError: name 'QPushButton' is not defined
+2025-05-23 16:53:41,768 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 16:53:43,238 - root - INFO - 📦 Versão: 3.0
+2025-05-23 16:53:43,242 - root - INFO - - Nahuales: 20
+2025-05-23 16:53:43,242 - root - INFO - - Signos: 20
+2025-05-23 16:53:43,431 - root - CRITICAL - ERRO: name 'QTimer' is not defined
+Traceback (most recent call last):
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\main.py", line 200, in main
+    window = MainWindow(connector)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 32, in __init__
+    self.setup_connections()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 153, in setup_connections
+    QTimer.singleShot(100, lambda: self.update_all_views(QDate.currentDate()))
+    ^^^^^^
+NameError: name 'QTimer' is not defined
+2025-05-23 16:53:59,170 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 16:54:00,468 - root - INFO - 📦 Versão: 3.0
+2025-05-23 16:54:00,469 - root - INFO - - Nahuales: 20
+2025-05-23 16:54:00,470 - root - INFO - - Signos: 20
+2025-05-23 16:54:00,651 - root - CRITICAL - ERRO: name 'QPushButton' is not defined
+Traceback (most recent call last):
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\main.py", line 200, in main
+    window = MainWindow(connector)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 31, in __init__
+    self.setup_ui()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 73, in setup_ui
+    self.init_content_widgets()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 100, in init_content_widgets
+    self._connect_advanced_features()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 114, in _connect_advanced_features
+    btn = self.findChild(QPushButton, 'venusCycleBtn')
+                         ^^^^^^^^^^^
+NameError: name 'QPushButton' is not defined
+2025-05-23 16:54:14,537 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 16:54:15,809 - root - INFO - 📦 Versão: 3.0
+2025-05-23 16:54:15,811 - root - INFO - - Nahuales: 20
+2025-05-23 16:54:15,812 - root - INFO - - Signos: 20
+2025-05-23 16:54:15,992 - root - CRITICAL - ERRO: name 'QTimer' is not defined
+Traceback (most recent call last):
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\main.py", line 200, in main
+    window = MainWindow(connector)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 32, in __init__
+    self.setup_connections()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 153, in setup_connections
+    QTimer.singleShot(100, lambda: self.update_all_views(QDate.currentDate()))
+    ^^^^^^
+NameError: name 'QTimer' is not defined
+2025-05-23 16:55:18,720 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 16:55:20,001 - root - INFO - 📦 Versão: 3.0
+2025-05-23 16:55:20,002 - root - INFO - - Nahuales: 20
+2025-05-23 16:55:20,003 - root - INFO - - Signos: 20
+2025-05-23 16:55:20,185 - root - CRITICAL - ERRO: name 'QTimer' is not defined
+Traceback (most recent call last):
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\main.py", line 200, in main
+    window = MainWindow(connector)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 32, in __init__
+    self.setup_connections()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 153, in setup_connections
+    QTimer.singleShot(100, lambda: self.update_all_views(QDate.currentDate()))
+    ^^^^^^
+NameError: name 'QTimer' is not defined
+2025-05-23 16:56:07,567 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 16:56:08,857 - root - INFO - 📦 Versão: 3.0
+2025-05-23 16:56:08,859 - root - INFO - - Nahuales: 20
+2025-05-23 16:56:08,862 - root - INFO - - Signos: 20
+2025-05-23 16:56:09,051 - root - CRITICAL - ERRO: name 'QTimer' is not defined
+Traceback (most recent call last):
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\main.py", line 200, in main
+    window = MainWindow(connector)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 32, in __init__
+    self.setup_connections()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 153, in setup_connections
+    QTimer.singleShot(100, lambda: self.update_all_views(QDate.currentDate()))
+    ^^^^^^
+NameError: name 'QTimer' is not defined
+2025-05-23 17:00:45,962 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 17:00:47,255 - root - INFO - 📦 Versão: 3.0
+2025-05-23 17:00:47,256 - root - INFO - - Nahuales: 20
+2025-05-23 17:00:47,257 - root - INFO - - Signos: 20
+2025-05-23 17:00:47,956 - root - INFO - 🚀 UI carregada com sucesso
+2025-05-23 17:01:07,362 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 17:01:08,644 - root - INFO - 📦 Versão: 3.0
+2025-05-23 17:01:08,645 - root - INFO - - Nahuales: 20
+2025-05-23 17:01:08,646 - root - INFO - - Signos: 20
+2025-05-23 17:01:09,272 - root - INFO - 🚀 UI carregada com sucesso
+2025-05-23 17:01:47,549 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 17:01:48,895 - root - INFO - 📦 Versão: 3.0
+2025-05-23 17:01:48,897 - root - INFO - - Nahuales: 20
+2025-05-23 17:01:48,898 - root - INFO - - Signos: 20
+2025-05-23 17:01:49,534 - root - INFO - 🚀 UI carregada com sucesso
+2025-05-23 17:08:16,373 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 17:08:17,685 - root - INFO - 📦 Versão: 3.0
+2025-05-23 17:08:17,686 - root - INFO - - Nahuales: 20
+2025-05-23 17:08:17,687 - root - INFO - - Signos: 20
+2025-05-23 17:08:18,442 - root - INFO - 🚀 UI carregada com sucesso
+2025-05-23 17:09:45,694 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 17:09:47,003 - root - INFO - 📦 Versão: 3.0
+2025-05-23 17:09:47,005 - root - INFO - - Nahuales: 20
+2025-05-23 17:09:47,006 - root - INFO - - Signos: 20
+2025-05-23 17:09:47,645 - root - INFO - 🚀 UI carregada com sucesso
+2025-05-23 17:11:01,458 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 17:11:02,740 - root - INFO - 📦 Versão: 3.0
+2025-05-23 17:11:02,742 - root - INFO - - Nahuales: 20
+2025-05-23 17:11:02,742 - root - INFO - - Signos: 20
+2025-05-23 17:11:03,447 - root - INFO - 🚀 UI carregada com sucesso
+2025-05-23 17:30:42,178 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 17:30:43,478 - root - INFO - 📦 Versão: 3.0
+2025-05-23 17:30:43,480 - root - INFO - - Nahuales: 20
+2025-05-23 17:30:43,481 - root - INFO - - Signos: 20
+2025-05-23 17:30:43,637 - root - CRITICAL - ERRO: name 'QWidget' is not defined
+Traceback (most recent call last):
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\main.py", line 200, in main
+    window = MainWindow(connector)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 33, in __init__
+    self.setup_ui()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 75, in setup_ui
+    self.init_content_widgets()
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\main_window.py", line 91, in init_content_widgets
+    from interface.widgets.math_viewer import MathViewer
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\interface\widgets\math_viewer.py", line 71, in <module>
+    class EpicMathViewer(QWidget):
+                         ^^^^^^^
+NameError: name 'QWidget' is not defined
+2025-05-23 17:46:35,505 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 17:46:36,877 - root - INFO - 📦 Versão: 3.0
+2025-05-23 17:46:36,881 - root - INFO - - Nahuales: 20
+2025-05-23 17:46:36,882 - root - INFO - - Signos: 20
+2025-05-23 17:46:37,739 - root - INFO - 🚀 UI carregada com sucesso
+2025-05-23 18:05:04,944 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 18:05:06,262 - root - INFO - 📦 Versão: 3.0
+2025-05-23 18:05:06,263 - root - INFO - - Nahuales: 20
+2025-05-23 18:05:06,264 - root - INFO - - Signos: 20
+2025-05-23 18:05:06,989 - root - INFO - 🚀 UI carregada com sucesso
+2025-05-23 18:20:59,171 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 18:21:00,500 - root - INFO - 📦 Versão: 3.0
+2025-05-23 18:21:00,501 - root - INFO - - Nahuales: 20
+2025-05-23 18:21:00,502 - root - INFO - - Signos: 20
+2025-05-23 18:21:00,760 - root - INFO - 🚀 UI carregada com sucesso
+2025-05-23 18:23:20,717 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 18:23:22,070 - root - INFO - 📦 Versão: 3.0
+2025-05-23 18:23:22,071 - root - INFO - - Nahuales: 20
+2025-05-23 18:23:22,072 - root - INFO - - Signos: 20
+2025-05-23 18:23:22,327 - root - INFO - 🚀 UI carregada com sucesso
+2025-05-23 18:25:54,162 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 18:25:55,500 - root - INFO - 📦 Versão: 3.0
+2025-05-23 18:25:55,502 - root - INFO - - Nahuales: 20
+2025-05-23 18:25:55,503 - root - INFO - - Signos: 20
+2025-05-23 18:25:56,389 - root - INFO - 🚀 UI carregada com sucesso
+2025-05-23 18:38:40,492 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 18:38:41,906 - root - INFO - 📦 Versão: 3.0
+2025-05-23 18:38:41,907 - root - INFO - - Nahuales: 20
+2025-05-23 18:38:41,908 - root - INFO - - Signos: 20
+2025-05-23 18:38:42,168 - root - INFO - 🚀 UI carregada com sucesso
+2025-05-23 18:39:17,639 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 18:39:18,940 - root - INFO - 📦 Versão: 3.0
+2025-05-23 18:39:18,941 - root - INFO - - Nahuales: 20
+2025-05-23 18:39:18,942 - root - INFO - - Signos: 20
+2025-05-23 18:39:19,197 - root - INFO - 🚀 UI carregada com sucesso
+2025-05-23 18:39:47,708 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 18:39:49,024 - root - INFO - 📦 Versão: 3.0
+2025-05-23 18:39:49,026 - root - INFO - - Nahuales: 20
+2025-05-23 18:39:49,027 - root - INFO - - Signos: 20
+2025-05-23 18:39:49,823 - root - INFO - 🚀 UI carregada com sucesso
+2025-05-23 18:40:09,472 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 18:40:10,779 - root - INFO - 📦 Versão: 3.0
+2025-05-23 18:40:10,780 - root - INFO - - Nahuales: 20
+2025-05-23 18:40:10,781 - root - INFO - - Signos: 20
+2025-05-23 18:40:11,484 - root - INFO - 🚀 UI carregada com sucesso
+2025-05-23 18:40:32,493 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 18:40:33,796 - root - INFO - 📦 Versão: 3.0
+2025-05-23 18:40:33,798 - root - INFO - - Nahuales: 20
+2025-05-23 18:40:33,799 - root - INFO - - Signos: 20
+2025-05-23 18:40:34,063 - root - INFO - 🚀 UI carregada com sucesso
+2025-05-23 18:42:05,806 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 18:42:07,108 - root - INFO - 📦 Versão: 3.0
+2025-05-23 18:42:07,109 - root - INFO - - Nahuales: 20
+2025-05-23 18:42:07,110 - root - INFO - - Signos: 20
+2025-05-23 18:42:07,367 - root - INFO - 🚀 UI carregada com sucesso
+2025-05-23 18:45:40,398 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 18:45:42,183 - root - INFO - 📦 Versão: 3.0
+2025-05-23 18:45:42,185 - root - INFO - - Nahuales: 20
+2025-05-23 18:45:42,186 - root - INFO - - Signos: 20
+2025-05-23 18:45:42,934 - root - INFO - 🚀 UI carregada com sucesso
+2025-05-23 20:55:18,560 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 20:55:19,838 - root - INFO - 📦 Versão: 3.0
+2025-05-23 20:55:19,839 - root - INFO - - Nahuales: 20
+2025-05-23 20:55:19,840 - root - INFO - - Signos: 20
+2025-05-23 20:55:20,534 - root - INFO - 🚀 UI carregada com sucesso
+2025-05-23 20:56:23,398 - root - INFO - 🌀 INICIALIZANDO SISTEMA MAIA-ASTECA
+2025-05-23 20:56:24,691 - root - INFO - 📦 Versão: 3.0
+2025-05-23 20:56:24,692 - root - INFO - - Nahuales: 20
+2025-05-23 20:56:24,695 - root - INFO - - Signos: 20
+2025-05-23 20:56:25,310 - root - INFO - 🚀 UI carregada com sucesso
+2025-05-23 20:56:32,549 - root - INFO - Encerrando aplicação...
+2025-05-23 21:57:33,948 - root - INFO - Encerrando aplicação...
+2025-05-23 22:10:02,846 - root - INFO - Encerrando aplicação...
+2025-05-23 22:24:09,237 - root - ERROR - Erro ao atualizar views: 'BasicMathViewer' object has no attribute 'calculate_venus'
+2025-05-23 22:24:11,509 - root - ERROR - Erro ao atualizar views: 'BasicMathViewer' object has no attribute 'calculate_venus'
+2025-05-23 22:24:12,661 - root - ERROR - Erro ao atualizar views: 'BasicMathViewer' object has no attribute 'calculate_venus'
+2025-05-23 22:24:20,157 - root - ERROR - Erro ao atualizar views: 'BasicMathViewer' object has no attribute 'calculate_venus'
+2025-05-23 22:24:32,376 - root - INFO - Encerrando aplicação...
+2025-05-24 00:26:01,206 - root - CRITICAL - Falha crítica: 'StyleManager' object has no attribute 'apply_theme'
+2025-05-24 00:36:09,782 - root - ERROR - Erro ao atualizar views: 'MainWindow' object has no attribute 'glyph_viewer'
+2025-05-24 00:36:15,255 - root - ERROR - Erro ao atualizar views: 'MainWindow' object has no attribute 'glyph_viewer'
+2025-05-24 00:36:16,678 - root - ERROR - Erro ao atualizar views: 'MainWindow' object has no attribute 'glyph_viewer'
+2025-05-24 00:36:17,998 - root - ERROR - Erro ao atualizar views: 'MainWindow' object has no attribute 'glyph_viewer'
+2025-05-24 00:36:20,742 - root - ERROR - Erro ao atualizar views: 'MainWindow' object has no attribute 'glyph_viewer'
+2025-05-24 00:36:21,814 - root - ERROR - Erro ao atualizar views: 'MainWindow' object has no attribute 'glyph_viewer'
+2025-05-24 00:36:28,126 - root - ERROR - Erro ao atualizar views: 'MainWindow' object has no attribute 'glyph_viewer'
+2025-05-24 00:36:28,998 - root - ERROR - Erro ao atualizar views: 'MainWindow' object has no attribute 'glyph_viewer'
+2025-05-24 00:36:53,310 - root - ERROR - Erro ao atualizar views: 'MainWindow' object has no attribute 'glyph_viewer'
+2025-05-24 00:36:54,414 - root - ERROR - Erro ao atualizar views: 'MainWindow' object has no attribute 'glyph_viewer'
+2025-05-24 00:36:55,735 - root - ERROR - Erro ao atualizar views: 'MainWindow' object has no attribute 'glyph_viewer'
+2025-05-24 00:36:56,742 - root - ERROR - Erro ao atualizar views: 'MainWindow' object has no attribute 'glyph_viewer'
+2025-05-24 00:36:58,087 - root - ERROR - Erro ao atualizar views: 'MainWindow' object has no attribute 'glyph_viewer'
+2025-05-24 00:36:59,086 - root - ERROR - Erro ao atualizar views: 'MainWindow' object has no attribute 'glyph_viewer'
+2025-05-24 00:37:07,517 - root - INFO - Encerrando aplicação...
+2025-05-24 00:46:38,141 - root - INFO - Encerrando aplicação...
+2025-05-24 00:54:39,346 - root - INFO - Encerrando aplicação...
+2025-05-24 01:06:53,860 - root - INFO - Encerrando aplicação...
+2025-05-24 01:33:09,368 - root - INFO - Encerrando aplicação...
+2025-05-24 01:57:58,789 - root - INFO - Encerrando aplicação...
+2025-05-24 01:58:03,307 - root - ERROR - Falha ao carregar visualizador matemático: No module named 'PyQt6.QtChart'
+2025-05-24 01:58:03,309 - root - WARNING - Fallback criado para math
+2025-05-24 01:58:39,419 - root - INFO - Encerrando aplicação...
+2025-05-24 01:58:43,878 - root - ERROR - Falha ao carregar visualizador matemático: No module named 'PyQt6.QtChart'
+2025-05-24 01:58:43,879 - root - WARNING - Fallback criado para math
+2025-05-24 01:58:48,374 - root - INFO - Encerrando aplicação...
+2025-05-24 01:59:00,742 - root - ERROR - Falha ao carregar visualizador matemático: No module named 'PyQt6.QtChart'
+2025-05-24 01:59:00,743 - root - WARNING - Fallback criado para math
+2025-05-24 02:00:30,252 - root - INFO - Encerrando aplicação...
+2025-05-24 02:05:12,630 - root - ERROR - Falha ao carregar visualizador matemático: No module named 'PyQt6.QtChart'
+2025-05-24 02:05:12,631 - root - WARNING - Fallback criado para math
+2025-05-24 02:05:27,029 - root - INFO - Encerrando aplicação...
+2025-05-24 02:13:31,344 - root - ERROR - Falha ao carregar visualizador matemático: No module named 'PyQt6.QtChart'
+2025-05-24 02:13:31,345 - root - WARNING - Fallback criado para math
+2025-05-24 02:14:31,987 - root - INFO - Encerrando aplicação...
+2025-05-24 02:15:44,277 - root - ERROR - Falha ao carregar visualizador matemático: No module named 'PyQt6.QtChart'
+2025-05-24 02:15:44,278 - root - WARNING - Fallback criado para math
+2025-05-24 02:15:49,924 - root - INFO - Encerrando aplicação...
+2025-05-24 02:19:32,781 - root - ERROR - Falha ao carregar visualizador matemático: No module named 'PyQt6.QtChart'
+2025-05-24 02:19:32,782 - root - WARNING - Fallback criado para math
+2025-05-24 02:19:45,250 - root - INFO - Encerrando aplicação...
+2025-05-24 02:37:12,741 - root - WARNING - CosmosView não disponível: 'MainWindow' object has no attribute 'init_cosmos_view'
+2025-05-24 02:37:12,743 - root - WARNING - Visualizador matemático não disponível: No module named 'PyQt6.QtChart'
+2025-05-24 02:37:56,799 - root - INFO - Encerrando aplicação...
+2025-05-24 02:48:37,317 - root - WARNING - Visualizador matemático não disponível: No module named 'PyQt6.QtChart'
+2025-05-24 02:49:18,202 - root - INFO - Encerrando aplicação...
+2025-05-24 02:56:29,625 - root - WARNING - Visualizador matemático não disponível: No module named 'PyQt6.QtChart'
+2025-05-24 02:59:50,254 - root - INFO - Encerrando aplicação...
+2025-05-24 03:01:28,216 - root - WARNING - Visualizador matemático não disponível: No module named 'PyQt6.QtChart'
+2025-05-24 03:06:35,710 - root - INFO - Encerrando aplicação...
+2025-05-24 03:24:24,833 - root - WARNING - Visualizador matemático não disponível: No module named 'PyQt6.QtChart'
+2025-05-24 03:24:44,888 - root - WARNING - Visualizador matemático não disponível: No module named 'PyQt6.QtChart'
+2025-05-24 03:27:00,488 - root - WARNING - Visualizador matemático não disponível: No module named 'PyQt6.QtChart'
+2025-05-24 10:08:21,406 - root - WARNING - Visualizador matemático não disponível: No module named 'PyQt6.QtChart'
+2025-05-24 10:22:31,559 - root - WARNING - Visualizador matemático não disponível: No module named 'PyQt6.QtChart'
+2025-05-24 13:07:22,844 - root - WARNING - Visualizador matemático não disponível: No module named 'PyQt6.QtChart'
+2025-05-24 18:27:11,105 - root - WARNING - Visualizador matemático não disponível: No module named 'PyQt6.QtChart'
+2025-05-24 18:53:58,849 - root - ERROR - Falha ao carregar linha do tempo: math domain error
+2025-05-24 18:53:58,849 - root - WARNING - Fallback criado para timeline
+2025-05-24 18:53:58,903 - root - WARNING - Visualizador matemático não disponível: No module named 'PyQt6.QtChart'
+2025-05-24 18:57:30,339 - root - INFO - Encerrando aplicação...
+2025-05-24 18:57:43,444 - root - ERROR - Falha ao carregar linha do tempo: math domain error
+2025-05-24 18:57:43,445 - root - WARNING - Fallback criado para timeline
+2025-05-24 18:57:43,456 - root - WARNING - Visualizador matemático não disponível: No module named 'PyQt6.QtChart'
+2025-05-24 18:59:12,826 - root - ERROR - Falha ao carregar linha do tempo: math domain error
+2025-05-24 18:59:12,827 - root - WARNING - Fallback criado para timeline
+2025-05-24 18:59:12,837 - root - WARNING - Visualizador matemático não disponível: No module named 'PyQt6.QtChart'
+2025-05-24 19:04:16,712 - root - INFO - Encerrando aplicação...
+2025-05-24 19:04:24,879 - root - WARNING - Visualizador matemático não disponível: No module named 'PyQt6.QtChart'
+2025-05-24 19:22:31,445 - root - INFO - Encerrando aplicação...
+2025-05-24 19:22:40,124 - root - ERROR - Falha ao carregar linha do tempo: name 'QHBoxLayout' is not defined
+2025-05-24 19:22:40,125 - root - WARNING - Fallback criado para timeline
+2025-05-24 19:22:40,136 - root - WARNING - Visualizador matemático não disponível: No module named 'PyQt6.QtChart'
+2025-05-24 19:26:50,627 - root - WARNING - Visualizador matemático não disponível: No module named 'PyQt6.QtChart'
+2025-05-24 19:36:32,327 - root - ERROR - Falha ao carregar linha do tempo: 'builtin_function_or_method' object has no attribute 'setSceneRect'
+2025-05-24 19:36:32,328 - root - WARNING - Fallback criado para timeline
+2025-05-24 19:36:32,340 - root - WARNING - Visualizador matemático não disponível: No module named 'PyQt6.QtChart'
+2025-05-24 19:43:21,128 - root - WARNING - Visualizador matemático não disponível: No module named 'PyQt6.QtChart'
+2025-05-24 20:04:37,354 - root - INFO - Encerrando aplicação...
+2025-05-24 20:49:51,949 - root - CRITICAL - Falha na inicialização: 'MainWindow' object has no attribute 'setup_status_bar'
+2025-05-24 20:55:43,957 - root - CRITICAL - Falha na inicialização: 'MainWindow' object has no attribute 'setup_main_layout'
+2025-06-24 20:12:18,294 - ERROR - Falha cr�tica na verifica��o de licen�a: 'NoneType' object has no attribute 'encode'
+2025-06-24 20:44:49,347 - ERROR - Falha cr�tica na verifica��o de licen�a: 'NoneType' object has no attribute 'encode'

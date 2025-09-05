@@ -1,0 +1,132 @@
+{
+  "events": [
+    {
+      "year": -3114,
+      "title": "Data Zero Maia",
+      "description": "Início da contagem longa no calendário maia, considerada a data da criação.",
+      "civilization": "Maya",
+      "type": "mythological",
+      "sources": ["Códice Dresden", "Estela C de Quiriguá"]
+    },
+    {
+      "year": -2700,
+      "title": "Início da Filosofia Egípcia e Suméria",
+      "description": "Primeiros registros filosóficos e códigos morais nas civilizações do Egito e da Mesopotâmia.",
+      "civilization": "Egípcia / Suméria",
+      "type": "cultural",
+      "sources": ["Textos das Pirâmides", "Código de Ur-Nammu"]
+    },
+    {
+      "year": -1500,
+      "title": "Queda do Império Egípcio Médio",
+      "description": "Declínio do poder centralizado do Egito, marcando o fim do Império Médio.",
+      "civilization": "Egípcia",
+      "type": "collapse",
+      "sources": ["Registros de Tebas", "Cartas de Amarna"]
+    },
+    {
+      "year": -508,
+      "title": "Democracia Ateniense",
+      "description": "Criação do sistema democrático em Atenas, base da política ocidental.",
+      "civilization": "Grega",
+      "type": "political",
+      "sources": ["Constituição de Atenas", "Heródoto"]
+    },
+    {
+      "year": -27,
+      "title": "Início do Império Romano",
+      "description": "Augusto torna-se o primeiro imperador, marcando a transição da República ao Império.",
+      "civilization": "Romana",
+      "type": "political",
+      "sources": ["Tácito", "Suetônio"]
+    },
+    {
+      "year": 0,
+      "title": "Nascimento de Jesus Cristo",
+      "description": "Evento simbólico que marca o início do calendário cristão e influência global na religião e cultura.",
+      "civilization": "Romana / Judaica",
+      "type": "religious",
+      "sources": ["Evangelhos Canônicos", "Historiadores Romanos"]
+    },
+    {
+      "year": 476,
+      "title": "Queda do Império Romano do Ocidente",
+      "description": "Fim da autoridade imperial em Roma, início da Idade Média.",
+      "civilization": "Romana",
+      "type": "collapse",
+      "sources": ["Crônicas de Odoacro", "Documentos Bizantinos"]
+    },
+    {
+      "year": 1096,
+      "title": "Início das Cruzadas",
+      "description": "Campanhas religiosas militares entre cristãos e muçulmanos pela Terra Santa.",
+      "civilization": "Cristã / Islâmica",
+      "type": "religious",
+      "sources": ["Cartas de Urbano II", "Crônicas das Cruzadas"]
+    },
+    {
+      "year": 1492,
+      "title": "Chegada de Colombo à América",
+      "description": "Descoberta do Novo Mundo e início da colonização europeia nas Américas.",
+      "civilization": "Ibérica",
+      "type": "exploration",
+      "sources": ["Cartas de Colombo", "Relatórios Reais"]
+    },
+    {
+      "year": 1517,
+      "title": "Reforma Protestante",
+      "description": "Martinho Lutero publica suas 95 Teses, iniciando a divisão da Igreja Católica.",
+      "civilization": "Europeia",
+      "type": "religious",
+      "sources": ["95 Teses", "Documentos do Concílio de Trento"]
+    },
+    {
+      "year": 1789,
+      "title": "Revolução Francesa",
+      "description": "Queda da monarquia absoluta e ascensão de ideias democráticas na Europa.",
+      "civilization": "Francesa",
+      "type": "political",
+      "sources": ["Declaração dos Direitos do Homem", "Registros da Assembleia Nacional"]
+    },
+    {
+      "year": 1835,
+      "title": "Guerra dos Farrapos (Guerra das Correntes)",
+      "description": "Revolta separatista no sul do Brasil contra o governo imperial.",
+      "civilization": "Brasileira",
+      "type": "revolution",
+      "sources": ["Cartas de Bento Gonçalves", "Registros Imperiais"]
+    },
+    {
+      "year": 1760,
+      "title": "Início da Revolução Industrial",
+      "description": "Transformações sociais e econômicas com a introdução das máquinas e fábricas.",
+      "civilization": "Britânica / Europeia",
+      "type": "technological",
+      "sources": ["Relatórios Industriais", "Escritos de Adam Smith"]
+    },
+    {
+      "year": 1914,
+      "title": "Primeira Guerra Mundial",
+      "description": "Conflito global causado por tensões imperialistas, com milhões de mortos.",
+      "civilization": "Global",
+      "type": "military",
+      "sources": ["Tratado de Versalhes", "Registros Militares"]
+    },
+    {
+      "year": 1939,
+      "title": "Segunda Guerra Mundial",
+      "description": "Maior conflito da história, com genocídios, novas tecnologias bélicas e redefinição da ordem global.",
+      "civilization": "Global",
+      "type": "military",
+      "sources": ["Nuremberg", "Registros da ONU"]
+    },
+    {
+      "year": 1969,
+      "title": "Chegada do Homem à Lua",
+      "description": "Missão Apollo 11 da NASA coloca o primeiro humano na Lua, simbolizando avanço tecnológico.",
+      "civilization": "Moderna",
+      "type": "technological",
+      "sources": ["NASA", "Registros da Apollo 11"]
+    }
+  ]
+}

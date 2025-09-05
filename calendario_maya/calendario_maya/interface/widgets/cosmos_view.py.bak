@@ -1,0 +1,953 @@
+# Stdlib imports
+import sys
+import math
+import logging
+import os
+from datetime import date
+from typing import Dict, Any
+from math import acos, sin, cos, radians, degrees
+
+# Third-party imports
+import numpy as np
+from PyQt6.QtWidgets import QTabWidget, QWidget, QVBoxLayout, QTextEdit
+from PyQt6.QtCore import Qt, QTimer, QDate
+from PyQt6.QtGui import QSurfaceFormat
+
+HAS_OPENGL = False
+try:
+    from PyQt6.QtOpenGLWidgets import QOpenGLWidget
+    from OpenGL.GL import *
+    HAS_OPENGL = True
+except ImportError as e:
+    logging.warning(f"OpenGL não disponível - {e}")
+
+from calendario_maya.utils.mayan_astronomy import MayanAstronomy
+from calendario_maya.core.star_map import StarMap
+from calendario_maya.constants.astronomia import (
+    EARTH_ORBITAL_PERIOD,
+    VENUS_ORBITAL_PERIOD,
+    GALACTIC_YEAR_DAYS
+)
+
+# Constantes para o sistema solar
+SUN_ORBIT_RADIUS_GL = 0.8
+SUN_SIZE_GL = 0.1
+EARTH_SIZE_GL = 0.05
+VENUS_SIZE_GL = 0.04
+
+# Constantes astronômicas
+REFERENCE_DATE = date(2012, 12, 21)
+VENUS_SYNODIC = 583.92
+GALACTIC_EPOCH_JD = 2456293.5  
+GALACTIC_YEAR_DAYS = 225000000  # Dias em um ano galáctico (aproximado)
+
+class CosmosViewBase:
+    """Classe base com cálculos astronômicos compartilhados."""
+    def __init__(self, connector=None):
+        self.connector = connector
+        self.astronomy = MayanAstronomy(connector)
+        self.celestial_data = {}
+        self.astronomical_calculations: Dict[str, Any] = {}
+        self.current_q_date = QDate.currentDate()
+        self.logger = logging.getLogger(self.__class__.__name__)
+        
+        # Inicialização do módulo de astronomia
+        self._init_astronomy_module()
+        
+        # Cache para otimização
+        self._cache = {
+            'venus': {},
+            'cosmic': {},
+            'galactic': {}
+        }
+
+    def _harmonic_convergence(self, date_obj):
+        """Calcula a convergência harmônica entre ciclos"""
+        try:
+            # Data de referência: 21/12/2012
+            ref_date = date(2012, 12, 21)
+            days_since = (date_obj - ref_date).days
+        
+            # Ciclos importantes
+            tzolkin = (days_since % 260) / 260.0  # Ciclo sagrado de 260 dias
+            venus = (days_since % 584) / 584.0    # Ciclo sinódico de Vênus
+            solar = (days_since % 365.25) / 365.25 # Ano solar
+        
+            # Cálculo da convergência
+            convergence = (1 - abs(tzolkin - venus)) * (1 - abs(venus - solar)) * 100
+            return round(convergence, 2)
+        except:
+            return 0.0
+
+    def update_cycle_display(self, cycle_data):
+        """Atualiza a exibição dos ciclos"""
+        try:
+            # Mantém os cálculos existentes
+            self.update_solar_system(cycle_data['date'])
+        
+            # Adiciona os novos displays de ciclo
+            self.cycle_label.setText(f"""
+                <div style='font-size:14pt; color:#4ecca3;'>
+                    <b>Ciclo Tzolk'in:</b> {cycle_data['tzolkin']}/260<br>
+                    <b>Harmonia Venus-Terra:</b> {cycle_data['harmonic']:.2f} Hz<br>
+                    <b>Sequência Fibonacci:</b> {', '.join(map(str, cycle_data['fibonacci_sequence']))}
+                </div>
+            """)
+        
+        except Exception as e:
+            print(f"Erro ao atualizar ciclos: {e}")
+
+    def _init_astronomy_module(self):
+        """Inicializa o módulo de astronomia maia com fallback"""
+        try:
+            from calendario_maya.utils.mayan_astronomy import MayanAstronomy
+            self.astronomy = MayanAstronomy(self.connector)
+            self.logger.debug("Módulo astronômico avançado carregado")
+        except ImportError as e:
+            self.logger.warning(f"Módulo MayanAstronomy não encontrado: {str(e)}")
+            from calendario_maya.utils.basic_astronomy import BasicAstronomy
+            self.astronomy = BasicAstronomy(self.connector)
+
+    def _normalize_date(self, date_obj):
+        """Converte QDate, datetime ou date para datetime.date com tratamento de erros"""
+        try:
+            if hasattr(date_obj, 'toPyDate'):  # Se for QDate
+                return date_obj.toPyDate()
+            elif hasattr(date_obj, 'date'):  # Se for datetime
+                return date_obj.date()
+            elif isinstance(date_obj, str):  # Se for string
+                return datetime.strptime(date_obj, "%Y-%m-%d").date()
+            return date_obj  # Assume que já é date
+        
+        except Exception as e:
+            print(f"Erro ao normalizar data {date_obj}: {str(e)}")
+            # Retorna uma data fallback (21/12/2012)
+            return date(2012, 12, 21)
+
+    def calculate_galactic_venus_cycles(self, date_obj: date) -> Dict[str, Any]:
+        """Versão com tratamento completo de erros"""
+        try:
+            date_obj = self._normalize_date(date_obj)
+            
+            # Verificação de cache primeiro
+            if date_obj in self._cache['galactic']:
+                return self._cache['galactic'][date_obj]
+            
+            # Cálculos principais
+            result = self.astronomy.calculate_galactic_venus_cycles(date_obj)
+            
+            # Armazena no cache antes de retornar
+            self._cache['galactic'][date_obj] = result
+            return result
+            
+        except Exception as e:
+            self.logger.error(f"Erro em calculate_galactic_venus_cycles: {str(e)}")
+            return {
+                'error': str(e),
+                'date': date_obj.isoformat(),
+                'fallback_data': self._get_fallback_venus_data(date_obj)
+            }
+
+    def _get_fallback_venus_data(self, date_obj):
+        """Dados básicos quando cálculos precisos falham"""
+        days_since_2012 = (date_obj - REFERENCE_DATE).days
+        return {
+            'angular_dist_gc': (days_since_2012 % 584) / 584 * 360,
+            'venus_phase': (days_since_2012 % 584) / 584,
+            'is_fallback': True
+        }
+
+    def _calculate_sun_galactic_angle(self, current_jd):
+        """Calcula o ângulo orbital do Sol em torno do centro galáctico."""
+        days_since_galactic_epoch = current_jd - GALACTIC_EPOCH_JD
+        
+        if GALACTIC_YEAR_DAYS == 0:
+            print("[SUN ANGLE ERROR] COSMOS_VIEW: GALACTIC_YEAR_DAYS é zero.")
+            return 0.0
+
+        fraction_of_orbit = days_since_galactic_epoch / GALACTIC_YEAR_DAYS
+        angle_degrees = fraction_of_orbit * 360.0
+            
+        if np.isnan(angle_degrees) or np.isinf(angle_degrees):
+            print(f"[SUN ANGLE WARNING] COSMOS_VIEW: Ângulo solar NaN/Inf para JD {current_jd}. Retornando 0.")
+            return 0.0
+            
+        return angle_degrees
+    
+    def verify_positions(self):
+        """Verifica os cálculos para datas específicas"""
+        test_dates = [
+            date(2024, 12, 31),
+            date(2025, 1, 1),
+            date(2012, 12, 21),  # Data de referência
+            date(2020, 6, 21)    # Solstício
+        ]
+    
+        for test_date in test_dates:
+            data = self._calculate_galactic_position(test_date)
+            print(f"\nData: {test_date}")
+            print(f"Terra: {data['earth_angle']:.2f}°")
+            print(f"Vênus: {data['venus_angle']:.2f}°")
+            print(f"Diferença angular: {(data['venus_angle'] - data['earth_angle']) % 360:.2f}°")
+        
+            # Verificações básicas
+            assert 0 <= data['earth_angle'] < 360
+            assert 0 <= data['venus_angle'] < 360
+            assert abs(data['earth_angle'] - data['venus_angle']) < 360
+
+    def _calculate_galactic_position(self, date_py):
+        """Usa a classe centralizada para cálculos"""
+        days_since_2012 = (date_py - self.astronomy.REFERENCE_DATE).days
+        positions = self.astronomy.get_planetary_positions(date_py)
+        
+        return {
+            'date': date_py.isoformat(),
+            'days_since_2012': days_since_2012,
+            'venus_angle': positions['venus']['position'],
+            'earth_angle': positions['terra']['position'],
+            'sun_angle_galactic': self._calculate_sun_galactic_angle(date_py),
+            'tzolkin_day': (days_since_2012 % 260) + 1
+        }
+    
+    def update_position(self, q_date=None):
+        if not q_date or not q_date.isValid():
+            q_date = QDate.currentDate()
+        
+        self.current_q_date = q_date
+        
+        try:
+            py_date = q_date.toPyDate()
+            self.astronomical_calculations = self._calculate_galactic_position(py_date)
+        
+            if hasattr(self.connector, 'get_astronomical_data'):
+                cel_data = self.connector.get_astronomical_data(q_date)
+                self.celestial_data = cel_data if cel_data else {}
+            
+            if hasattr(self, 'update_display'):
+                self.update_display()
+            elif hasattr(self, 'update_data') and not HAS_OPENGL:
+                self.update_data(q_date)
+
+        except Exception as e:
+            print(f"[COSMOS_VIEW UPDATE_POSITION ERROR] {str(e)}")
+            
+    def calculate_cosmic_data(self, date):
+        """Calcula dados cósmicos considerando o novo ciclo pós-2012"""
+        from datetime import date as date_type
+    
+        try:
+            # Verifica se está no novo ciclo (pós 21/12/2012)
+            is_new_cycle = date >= date_type(2012, 12, 21)
+        
+            # Seus cálculos existentes aqui...
+            cosmic_data = {
+                'galactic': self._calculate_galactic_position(date),
+                'harmonic': self._calculate_harmonic_convergence(date),
+                'planetary': self._calculate_planetary_positions(date),
+                'baktun': self._calculate_baktun(date),
+                'new_cycle': is_new_cycle  # Adiciona a informação do ciclo
+            }
+        
+            return cosmic_data
+
+        except Exception as e:
+            return {'error': str(e)}
+        
+    def test_planet_positions(self):
+        """Testa os cálculos das posições planetárias"""
+        test_date = date(2024, 12, 31)
+        data = self._calculate_galactic_position(test_date)
+    
+        print(f"Data: {test_date}")
+        print(f"Terra: {data['earth_angle']:.2f}°")
+        print(f"Vênus: {data['venus_angle']:.2f}°")
+    
+        # Verifica se os ângulos estão entre 0-360
+        assert 0 <= data['earth_angle'] < 360
+        assert 0 <= data['venus_angle'] < 360
+    
+        print("Teste passou: ângulos dentro do intervalo válido")
+    
+    def _calculate_baktun(self, date_obj):
+        """Calcula o baktun atual para uma data"""
+        try:
+            # Data de início do calendário maia: 11 de agosto de 3114 AEC
+            maya_epoch = date(3114, 8, 11)
+            delta = date_obj - maya_epoch
+            return int(delta.days / 144000)  # 1 baktun = 144,000 dias
+        except Exception as e:
+            self.logger.error(f"Erro calculando baktun: {str(e)}")
+            return 0
+
+class AstronomicalDataDisplay(QWidget):
+    """Widget avançado para exibição de dados astronômicos."""
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setup_ui()
+        
+    def setup_ui(self):
+        self.layout = QVBoxLayout()
+        self.setLayout(self.layout)
+        
+        self.data_display = QTextEdit()
+        self.data_display.setReadOnly(True)
+        self.data_display.setStyleSheet("""
+            QTextEdit {
+                background-color: #1a1a2e;
+                color: #e0e0e0;
+                border: 1px solid #6a3093;
+                border-radius: 5px;
+                padding: 10px;
+                font-family: Arial;
+            }
+        """)
+        self.layout.addWidget(self.data_display)
+    
+    def update_data(self, calculations, celestial_data): # calculations é self.astronomical_calculations
+        html = self._format_data_html(calculations, celestial_data)
+        self.data_display.setHtml(html)
+    
+    def _format_data_html(self, calculations, celestial_data):
+        planets = celestial_data.get('planets', {})
+        
+        # Adicionar Ângulo Solar Galáctico
+        sun_angle_g = calculations.get('sun_angle_galactic', 0)
+        # Para progresso, usar o ângulo bruto para manter a linearidade ao longo de muitos anos
+        raw_sun_angle_g = calculations.get('raw_sun_angle_galactic', 0)
+        progress_galactic_cycle = 0.0
+        if GALACTIC_YEAR_DAYS != 0:
+             # Progresso é a fração do ângulo bruto em relação a 360 graus de UM ciclo galáctico
+             # ou (dias_desde_epoca_galactica / DIAS_ANO_GALACTICO) * 100
+             days_since_gal_epoch = (self.parent().current_q_date.toJulianDay() + 0.5) - GALACTIC_EPOCH_JD # Supondo que o pai é CosmosView
+             progress_galactic_cycle = (days_since_gal_epoch / GALACTIC_YEAR_DAYS) * 100
+
+
+        return f"""
+        <html>
+            {self._get_html_styles()} <body>
+            <h2>Observatório Astronômico Maia</h2>
+            <h3>Data: <span class="highlight">{calculations.get('date', 'N/A')}</span></h3>
+            <p><b>Dias desde 21/12/2012:</b> <span class="highlight">{calculations.get('days_since_2012', 0)}</span></p>
+            <p><b>Dia Tzolk'in:</b> <span class="highlight">{calculations.get('tzolkin_day', 0)}</span></p>
+            
+            <h3>Posições Planetárias (Heliocêntricas Simplificadas)</h3>
+            <ul>
+                <li><b>Ângulo da Terra:</b> {calculations.get('earth_angle', 0):.2f}°</li>
+                <li><b>Ângulo de Vênus:</b> {calculations.get('venus_angle', 0):.2f}°</li>
+            </ul>
+            
+            <h3>Dados Galácticos do Sol</h3>
+            <ul>
+                <li><b>Ângulo Solar Galáctico (modelo):</b> {sun_angle_g:.7f}°</li>
+                <li><b>Progresso no Ciclo Galáctico Atual (desde época):</b> {progress_galactic_cycle:.10f}%</li>
+            </ul>
+
+            <h3>Outros Cálculos</h3>
+            <ul>
+                <li><b>Convergência Harmônica (Maya-Vênus):</b> {calculations.get('harmonic_convergence', 0):.2f}%</li>
+            </ul>
+            
+            </body></html>"""
+    
+    def _get_html_styles(self):
+        return """
+            <style>
+                body { background-color: #000033; color: #e0e0ff; font-family: Arial; padding: 15px; }
+                h2 { color: #64f5ff; border-bottom: 1px solid #4466ff; margin-top: 0; }
+                h3 { color: #ffa500; /* Laranja para subtítulos */ }
+                p, li { margin-bottom: 5px; }
+                .highlight { color: #ffeeaa; /* Amarelo claro para destaque */ font-weight: bold; }
+                ul { padding-left: 20px; list-style-type: disc; }
+                table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+                th { background-color: #1a1a5a; padding: 5px; text-align: left; border: 1px solid #4466ff;}
+                td { padding: 5px; border-bottom: 1px solid #444; }
+            </style>
+        """
+
+    def _format_planetary_table(self, planets): # Esta função parece ok
+        # ... (sem alterações, mas certifique-se que os dados de 'planets' são fornecidos corretamente) ...
+        rows = []
+        for planet, data in planets.items():
+            rows.append(f"""
+            <tr>
+                <td><b>{planet.capitalize()}</b></td>
+                <td>{data.get('position', 0):.1f}°</td>
+                <td>{data.get('cycle', 'N/A')} {'' if isinstance(data.get('cycle', 0), str) else 'dias'}</td>
+                <td>{data.get('phase', 0)*100:.1f}%</td>
+            </tr>""")
+        
+        if not rows: return "<p>Dados planetários detalhados não disponíveis.</p>"
+        
+        return f"""
+        <table>
+            <tr><th>Planeta</th><th>Posição</th><th>Ciclo</th><th>Fase</th></tr>
+            {''.join(rows)}
+        </table>"""
+
+if HAS_OPENGL:
+    class CosmosView(QOpenGLWidget if HAS_OPENGL else QWidget, CosmosViewBase):
+        def __init__(self, connector=None, parent=None):
+            if HAS_OPENGL:
+                QOpenGLWidget.__init__(self, parent)
+            else:
+                QWidget.__init__(self, parent)
+            
+            CosmosViewBase.__init__(self, connector)
+
+            # Configurações comuns
+            self.setMinimumSize(800, 600)
+        
+            if HAS_OPENGL:
+                self._setup_opengl()
+                self._setup_ui()  # UI específica para OpenGL
+            else:
+                self._update_lock = False
+                self._setup_matplotlib_ui()  # Fallback para matplotlib
+
+        def _setup_ui(self):
+            # Layout overlay para dados
+            self.overlay = QWidget(self)
+            self.overlay.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents)
+            self.overlay_layout = QVBoxLayout(self.overlay)
+            
+            self.data_display = AstronomicalDataDisplay()
+            self.overlay_layout.addWidget(self.data_display)
+            self.overlay.setGeometry(10, 10, 350, 400)
+
+        def _setup_opengl(self):
+            fmt = QSurfaceFormat()
+            fmt.setSamples(4)
+            fmt.setDepthBufferSize(24)
+            self.setFormat(fmt)
+            
+            self.rotation_angle = 0
+            self.timer = QTimer(self)
+            self.timer.timeout.connect(self._animate)
+            self.timer.start(30)
+
+        def _animate(self):
+            self.rotation_angle = (self.rotation_angle + 0.5) % 360
+            self.update()
+
+        def initializeGL(self):
+            glClearColor(0.02, 0.0, 0.08, 1.0)
+            glEnable(GL_DEPTH_TEST)
+            if self.format().samples() > 0:
+                glEnable(GL_MULTISAMPLE)
+
+        def paintGL(self):
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+            glLoadIdentity()
+        
+            # Ajuste de escala e translação se necessário para melhor visualização
+            # Exemplo: glScalef(0.5, 0.5, 0.5) # Para diminuir tudo pela metade se estiver muito grande
+            # Exemplo: glTranslatef(0.0, -0.1, 0.0) # Para mover um pouco para baixo
+
+            self._draw_black_hole() # Centro Galáctico em (0,0)
+
+            if not self.astronomical_calculations: # Sem dados, não desenha mais nada
+                return
+
+            # 1. Calcular e desenhar o Sol e sua órbita
+            # Assumindo que 'sun_angle_galactic' está em self.astronomical_calculations
+            sun_angle_rad = math.radians(self.astronomical_calculations.get('sun_angle_galactic', 0))
+        
+            # Convenção padrão: x = r*cos(theta), y = r*sin(theta)
+            # Se sua 'sun_angle_galactic' é 0 no topo e aumenta no sentido horário, você pode precisar de:
+            # sun_x = SUN_ORBIT_RADIUS_GL * math.sin(sun_angle_rad)
+            # sun_y = SUN_ORBIT_RADIUS_GL * math.cos(sun_angle_rad) 
+            # Por agora, usarei a convenção matemática padrão:
+            sun_x = SUN_ORBIT_RADIUS_GL * math.cos(sun_angle_rad)
+            sun_y = SUN_ORBIT_RADIUS_GL * math.sin(sun_angle_rad)
+
+            # Desenha a órbita do Sol
+            glColor3f(0.7, 0.7, 0.2) # Amarelo escuro para a órbita do Sol
+            self._draw_orbit_at_center(0, 0, SUN_ORBIT_RADIUS_GL, 100) # Órbita do Sol em torno do (0,0) galáctico
+
+            # Desenha o Sol
+            glColor3f(1.0, 1.0, 0.0) # Amarelo brilhante para o Sol
+            self._draw_circle(sun_x, sun_y, SUN_SIZE_GL, 20)
+
+            # 2. Desenhar planetas e suas órbitas AO REDOR DO SOL
+            self._draw_planetary_system(sun_x, sun_y)
+            
+        def _draw_planetary_system(self, sun_x, sun_y):
+            """ Desenha Terra, Vênus e suas órbitas ao redor da posição do Sol (sun_x, sun_y). """
+            if not self.astronomical_calculations:
+                return
+
+            # Órbita da Terra (ao redor do Sol)
+            glColor3f(0.2, 0.2, 0.8) # Azul para órbita da Terra
+            self._draw_orbit_at_center(sun_x, sun_y, EARTH_ORBIT_RADIUS_AROUND_SUN_GL, 60)
+        
+            # Órbita de Vênus (ao redor do Sol)
+            glColor3f(0.8, 0.5, 0.2) # Laranja para órbita de Vênus
+            self._draw_orbit_at_center(sun_x, sun_y, VENUS_ORBIT_RADIUS_AROUND_SUN_GL, 50)
+
+            # Terra
+            earth_angle_rad = math.radians(self.astronomical_calculations.get('earth_angle', 0))
+            # Posição da Terra relativa ao Sol, usando convenção padrão
+            earth_x_rel = EARTH_ORBIT_RADIUS_AROUND_SUN_GL * math.cos(earth_angle_rad)
+            earth_y_rel = EARTH_ORBIT_RADIUS_AROUND_SUN_GL * math.sin(earth_angle_rad)
+        
+            glColor3f(0.2, 0.5, 1.0) # Azul para Terra
+            self._draw_circle(sun_x + earth_x_rel, sun_y + earth_y_rel, EARTH_SIZE_GL, 20)
+        
+            # Vênus
+            venus_angle_rad = math.radians(self.astronomical_calculations.get('venus_angle', 0))
+            # Posição de Vênus relativa ao Sol, usando convenção padrão
+            venus_x_rel = VENUS_ORBIT_RADIUS_AROUND_SUN_GL * math.cos(venus_angle_rad)
+            venus_y_rel = VENUS_ORBIT_RADIUS_AROUND_SUN_GL * math.sin(venus_angle_rad)
+        
+            glColor3f(0.9, 0.7, 0.3) # Cor de Vênus
+            self._draw_circle(sun_x + venus_x_rel, sun_y + venus_y_rel, VENUS_SIZE_GL, 20)
+
+        # Seu _draw_orbit_at_center está bom
+        # def _draw_orbit_at_center(self, cx, cy, radius, segments=100): ...
+
+        # _draw_orbits original não é mais necessária se a lógica foi para paintGL e _draw_planetary_system
+        # def _draw_orbits(self): ... (PODE SER REMOVIDA ou esvaziada)
+
+        # _draw_planets original não é mais necessária se a lógica foi para _draw_planetary_system
+        # def _draw_planets(self): ... (PODE SER REMOVIDA ou esvaziada)
+    
+        # _draw_orbit(self, radius) original (que desenha em torno de 0,0) não é mais necessária
+        # se você sempre usa _draw_orbit_at_center.
+        # def _draw_orbit(self, radius, segments=100): ... (PODE SER REMOVIDA)
+
+        # _draw_circle está bom
+        # def _draw_circle(self, cx, cy, r, segments): ...
+
+        def update_display(self):
+            """Atualiza a exibição de dados"""
+            self.data_display.update_data(self.astronomical_calculations, self.celestial_data)
+
+        def _draw_black_hole(self):
+            """Desenha o centro galáctico"""
+            glColor3f(0.1, 0.1, 0.1)
+            self._draw_circle(0, 0, 0.1, 32)
+            glColor3f(0.3, 0, 0)
+            self._draw_circle(0, 0, 0.08, 32)
+            glColor3f(0.8, 0, 0)
+            self._draw_circle(0, 0, 0.05, 32)
+            
+        def _draw_orbit_at_center(self, cx, cy, radius, segments=100):
+            glBegin(GL_LINE_LOOP)
+            for i in range(segments):
+                theta = 2.0 * math.pi * i / segments
+                glVertex2f(cx + math.cos(theta) * radius, 
+                           cy + math.sin(theta) * radius)
+            glEnd()
+
+        def _draw_circle(self, cx, cy, r, segments):
+            glBegin(GL_POLYGON)
+            for i in range(segments):
+                theta = 2.0 * math.pi * i / segments
+                glVertex2f(cx + r*math.cos(theta), cy + r*math.sin(theta))
+            glEnd()
+            
+    def calculate_cosmic_data(self, date):
+        """Calcula dados cósmicos considerando o novo ciclo pós-2012"""
+        from datetime import date as date_type
+    
+        try:
+            # Verifica se está no novo ciclo (pós 21/12/2012)
+            is_new_cycle = date >= date_type(2012, 12, 21)
+        
+            # Seus cálculos existentes aqui...
+            cosmic_data = {
+                'galactic': self._calculate_galactic_position(date),
+                'harmonic': self._calculate_harmonic_convergence(date),
+                'planetary': self._calculate_planetary_positions(date),
+                'baktun': self._calculate_baktun(date),
+                'new_cycle': is_new_cycle  # Adiciona a informação do ciclo
+            }
+        
+            return cosmic_data
+        
+        except Exception as e:
+            return {'error': str(e)}
+
+else:
+    class CosmosView(QWidget, CosmosViewBase):
+        def __init__(self, connector=None, parent=None):
+            super().__init__(parent)
+            self._update_lock = False
+            self._setup_matplotlib_ui()
+            self.connector = connector
+            self.setup_ui()
+            
+        def setup_ui(self):
+            self.layout = QVBoxLayout(self)
+        
+            # Abas para diferentes visualizações
+            self.tabs = QTabWidget()
+        
+            # 1. Visualização do Sistema Solar
+            self.solar_view = SolarSystemView(self.connector)
+            self.tabs.addTab(self.solar_view, "Sistema Solar")
+        
+            # 2. Mapa Estelar - Hemisfério Norte
+            self.north_star_map = StarMapWidget("Norte")
+            self.tabs.addTab(self.north_star_map, "Estrelas - Norte")
+        
+            # 3. Mapa Estelar - Hemisfério Sul
+            self.south_star_map = StarMapWidget("Sul") 
+            self.tabs.addTab(self.south_star_map, "Estrelas - Sul")
+        
+            self.layout.addWidget(self.tabs)
+
+        def update_cosmic_view(self, date):
+            """Atualiza a visualização com os dados cósmicos da data especificada"""
+            try:
+                cosmic_data = self.calculate_cosmic_data(date)
+                if cosmic_data and 'error' not in cosmic_data:
+                    self._update_galactic_display(cosmic_data['galactic'])
+                    self._update_harmonic_display(cosmic_data['harmonic'])
+                    self._update_planetary_display(cosmic_data['planetary'])
+            except Exception as e:
+                self.logger.error(f"Erro ao atualizar visualização cósmica: {str(e)}")
+        
+        def _setup_matplotlib_ui(self):
+            """Configuração segura da UI"""
+            self.layout = QVBoxLayout(self)
+            self.setStyleSheet("background-color: #000020;")
+        
+            # Configuração mínima do matplotlib
+            self.figure, self.ax = plt.subplots()
+            self.figure.set_facecolor('#000033')
+            self.ax.set_facecolor('#000020')
+        
+            self.canvas = FigureCanvas(self.figure)
+            self.layout.addWidget(self.canvas)
+        
+            # Configurações visuais básicas
+            self.ax.grid(True, color='#4466ff', alpha=0.2)
+            for spine in self.ax.spines.values():
+                spine.set_edgecolor('#4466ff')
+
+        def update_data(self, date):
+            """Método à prova de loops"""
+            if self._update_lock or not date.isValid():
+                return
+            
+            self._update_lock = True
+            try:
+                self._safe_update(date)
+            except Exception as e:
+                print(f"[COSMOS SAFE ERROR] {str(e)}")
+            finally:
+                self._update_lock = False
+
+        def _safe_update(self, date):
+            """Atualização simplificada e segura"""
+            try:
+                self.ax.clear()
+            
+                # Dados mínimos para exibição
+                days = (date.toPyDate() - REFERENCE_DATE).days
+                angles = [
+                    days % 30 * 12,  # Terra
+                    days % 583 * 0.618  # Vênus
+                ]
+            
+                self.ax.bar(['Terra', 'Vênus'], angles, color=['#4ecca3', '#ffa500'])
+                self.ax.set_title('Posições Planetárias', color='white')
+                self.canvas.draw()
+
+            except Exception as e:
+                print(f"[PLOT ERROR] {str(e)}")
+                # Fallback visual
+                self.ax.text(0.5, 0.5, 'Dados disponíveis\nno painel ao lado', 
+                            ha='center', va='center', color='white')
+                self.canvas.draw()
+                
+class CosmosView3D(QWidget):  # Ou CosmosView se for o nome correto
+    def __init__(self, connector):
+        super().__init__()
+        self.connector = connector
+        self._setup_ui()
+        
+    def calculate_cosmic_data(self, date):
+        """Calcula dados cósmicos considerando o novo ciclo pós-2012"""
+        from datetime import date as date_type
+    
+        try:
+            # Verifica se está no novo ciclo (pós 21/12/2012)
+            is_new_cycle = date >= date_type(2012, 12, 21)
+        
+            # Seus cálculos existentes aqui...
+            cosmic_data = {
+                'galactic': self._calculate_galactic_position(date),
+                'harmonic': self._calculate_harmonic_convergence(date),
+                'planetary': self._calculate_planetary_positions(date),
+                'baktun': self._calculate_baktun(date),
+                'new_cycle': is_new_cycle  # Adiciona a informação do ciclo
+            }
+        
+            return cosmic_data
+        
+        except Exception as e:
+            return {'error': str(e)}
+        
+    def setup_ui(self):
+        self.layout = QVBoxLayout()
+        
+        # Abas principais
+        self.tabs = QTabWidget()
+        
+        # 1. Visualização 3D (herda da versão OpenGL)
+        if HAS_OPENGL:
+            self.galactic_view = CosmosView3D(self.connector)
+        else:
+            self.galactic_view = CosmosView2D(self.connector)
+        self.tabs.addTab(self.galactic_view, "🌀 Sistema Galáctico")
+        
+        # 2. Triangulações do Hemisfério Norte
+        self.north_tab = HemisphereTab("Norte", self.connector)
+        self.tabs.addTab(self.north_tab, "🌌 Hemisfério Norte")
+        
+        # 3. Triangulações do Hemisfério Sul
+        self.south_tab = HemisphereTab("Sul", self.connector)
+        self.tabs.addTab(self.south_tab, "🌠 Hemisfério Sul")
+        
+        self.layout.addWidget(self.tabs)
+        self.setLayout(self.layout)
+
+class HemisphereTab(QWidget):
+    def __init__(self, hemisphere, connector):
+        super().__init__()
+        self.hemisphere = hemisphere
+        self.connector = connector
+        self.setup_ui()
+        
+    def setup_ui(self):
+        layout = QVBoxLayout()
+        
+        # Mapa estelar
+        self.star_map = StarMapWidget(self.hemisphere)
+        layout.addWidget(self.star_map)
+        
+        # Controles
+        control_group = QGroupBox(f"Triangulações - {self.hemisphere}")
+        control_layout = QHBoxLayout()
+        
+        self.constellation1 = QComboBox()
+        self.constellation1.addItems(self.get_constellations())
+        control_layout.addWidget(QLabel("Constelação 1:"))
+        control_layout.addWidget(self.constellation1)
+        
+        self.constellation2 = QComboBox()
+        self.constellation2.addItems(self.get_constellations())
+        control_layout.addWidget(QLabel("Constelação 2:"))
+        control_layout.addWidget(self.constellation2)
+        
+        self.calculate_btn = QPushButton("Calcular Triangulação")
+        self.calculate_btn.clicked.connect(self.calculate_triangulation)
+        control_layout.addWidget(self.calculate_btn)
+        
+        control_group.setLayout(control_layout)
+        layout.addWidget(control_group)
+        
+        # Resultados
+        self.result_text = QTextEdit()
+        self.result_text.setReadOnly(True)
+        layout.addWidget(self.result_text)
+        
+        self.setLayout(layout)
+    
+    def get_constellations(self):
+        if self.hemisphere == "Norte":
+            return ["Ursa Maior", "Ursa Menor", "Draco", "Cassiopeia", "Lyra"]
+        return ["Cruzeiro do Sul", "Centaurus", "Carina", "Scorpius", "Sagittarius"]
+    
+    def calculate_triangulation(self):
+        const1 = self.constellation1.currentText()
+        const2 = self.constellation2.currentText()
+        
+        # Simulação de cálculo - implementar lógica real aqui
+        angle = random.randint(30, 150)
+        distance = random.uniform(10.5, 45.3)
+        
+        text = f"<h3>Triangulação {const1}-{const2}</h3>"
+        text += f"<p><b>Ângulo:</b> {angle}°</p>"
+        text += f"<p><b>Distância aparente:</b> {distance:.1f}°</p>"
+        text += f"<p><b>Alinhamento:</b> {self.get_alignment_description(angle)}</p>"
+        
+        self.result_text.setHtml(text)
+    
+    def get_alignment_description(self, angle):
+        if angle < 45: return "Alinhamento Fechado"
+        if angle < 90: return "Alinhamento Médio"
+        if angle < 135: return "Alinhamento Aberto"
+        return "Alinhamento Oposto"
+    
+class AstronomyView(QWidget):
+    def __init__(self, connector=None):
+        super().__init__()
+        self.connector = connector
+        self.setup_ui()
+        
+    def setup_ui(self):
+        self.layout = QVBoxLayout()
+        self.setLayout(self.layout)
+        
+        # Abas para hemisférios
+        self.tabs = QTabWidget()
+        self.northern_hemisphere = HemisphereView("Norte", self.connector)
+        self.southern_hemisphere = HemisphereView("Sul", self.connector)
+        
+        self.tabs.addTab(self.northern_hemisphere, "Hemisfério Norte")
+        self.tabs.addTab(self.southern_hemisphere, "Hemisfério Sul")
+        
+        self.layout.addWidget(self.tabs)
+        
+class HemisphereView(QWidget):
+    def __init__(self, hemisphere, connector):
+        super().__init__()
+        self.hemisphere = hemisphere
+        self.connector = connector
+        self.setup_ui()
+        
+    def setup_ui(self):
+        self.layout = QVBoxLayout()
+        self.setLayout(self.layout)
+        
+        # Mapa estelar
+        self.star_map = StarMapWidget(self.hemisphere)
+        self.layout.addWidget(self.star_map)
+        
+        # Controles de data
+        self.date_control = QCalendarWidget()
+        self.date_control.clicked.connect(self.update_view)
+        self.layout.addWidget(self.date_control)
+        
+        # Informações de alinhamento
+        self.alignment_info = QTextEdit()
+        self.alignment_info.setReadOnly(True)
+        self.layout.addWidget(self.alignment_info)
+        
+    def update_view(self, date):
+        """Atualiza a visualização com base na data selecionada"""
+        try:
+            # Obter posições planetárias
+            positions = self.connector.get_astronomical_data(date)
+            
+            # Atualizar mapa estelar
+            self.star_map.update_positions(positions)
+            
+            # Calcular alinhamentos
+            alignments = self.calculate_alignments(date, positions)
+            
+            # Exibir informações
+            self.show_alignment_info(date, alignments)
+            
+        except Exception as e:
+            print(f"Erro ao atualizar visualização: {str(e)}")
+            
+    def calculate_alignments(self, date, positions):
+        """Calcula alinhamentos significativos"""
+        alignments = []
+        
+        # Adicionar lógica de cálculo de alinhamentos aqui
+        # Exemplo: conjunções, oposições, etc.
+        
+        return alignments
+        
+    def show_alignment_info(self, date, alignments):
+        """Exibe informações de alinhamento"""
+        info = f"<h2>Alinhamentos para {date.toString('dd/MM/yyyy')}</h2>"
+        
+        if alignments:
+            for alignment in alignments:
+                info += f"<p><b>{alignment['name']}</b>: {alignment['description']}</p>"
+        else:
+            info += "<p>Nenhum alinhamento significativo nesta data.</p>"
+            
+        self.alignment_info.setHtml(info)
+        
+class ProphecyAnalyzer:
+    def __init__(self, connector):
+        self.connector = connector
+        
+    def analyze_prophecy(self, text, date):
+        """Analisa uma profecia com base nos alinhamentos astronômicos"""
+        # Obter alinhamentos para a data
+        alignments = self.connector.get_astronomical_alignments(date)
+        
+        # Análise básica (pode ser expandida)
+        analysis = {
+            'date': date,
+            'alignments': alignments,
+            'interpretation': self.interpret_alignments(alignments),
+            'historical_correlations': self.find_historical_correlations(alignments)
+        }
+        
+        return analysis
+        
+    def interpret_alignments(self, alignments):
+        """Interpreta os alinhamentos para previsões"""
+        # Adicionar lógica de interpretação aqui
+        return "Interpretação dos alinhamentos"
+        
+    def find_historical_correlations(self, alignments):
+        """Encontra eventos históricos com alinhamentos similares"""
+        # Consultar banco de dados histórico
+        return self.connector.query_historical_events(alignments)
+    
+class SolarSystemView(QWidget):
+    """Visualização simplificada do sistema solar"""
+    def __init__(self, connector):
+        super().__init__()
+        self.connector = connector
+        self.setup_ui()
+        
+    def setup_ui(self):
+        self.layout = QVBoxLayout(self)
+        self.canvas = QLabel()
+        self.canvas.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.layout.addWidget(self.canvas)
+        
+    def update_positions(self, date):
+        """Atualiza as posições planetárias"""
+        # Implementação simplificada - pode ser substituída por OpenGL
+        try:
+            from PIL import Image, ImageDraw
+            width, height = 600, 400
+            img = Image.new('RGB', (width, height), (10, 10, 30))
+            draw = ImageDraw.Draw(img)
+            
+            # Desenha o sol no centro
+            draw.ellipse((290, 190, 310, 210), fill=(255, 215, 0))
+            
+            # Obter posições planetárias
+            if hasattr(self.connector, 'astronomy'):
+                positions = self.connector.astronomy.get_planetary_positions(date.toPyDate())
+                
+                # Desenha planetas (simplificado)
+                for planet, data in positions.items():
+                    angle = math.radians(data.get('position', 0))
+                    distance = 50 + 20 * data.get('phase', 0) * 5
+                    x = width/2 + distance * math.cos(angle)
+                    y = height/2 + distance * math.sin(angle)
+                    
+                    color = {
+                        'venus': (255, 160, 122),
+                        'earth': (100, 149, 237),
+                        'mars': (255, 69, 0)
+                    }.get(planet, (200, 200, 200))
+                    
+                    size = 8 if planet != 'sun' else 12
+                    draw.ellipse((x-size/2, y-size/2, x+size/2, y+size/2), fill=color)
+            
+            # Converte para QPixmap e exibe
+            from PIL.ImageQt import ImageQt
+            from PyQt6.QtGui import QPixmap
+            qim = ImageQt(img)
+            self.canvas.setPixmap(QPixmap.fromImage(qim))
+            
+        except ImportError:
+            self.canvas.setText("Instale Pillow para visualização do sistema solar")
+        except Exception as e:
+            print(f"Erro ao renderizar sistema solar: {str(e)}")
+            self.canvas.setText("Erro ao renderizar visualização")

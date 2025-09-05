@@ -1,0 +1,38 @@
+2025-05-23 19:57:36,541 - root - INFO - 🌀 Iniciando Calendário Maya-Asteca v3.0
+2025-05-23 19:57:36,542 - root - WARNING - PyQt6-Charts não instalado. Gráficos não estarão disponíveis.
+2025-05-23 19:57:38,214 - OpenGL.acceleratesupport - INFO - No OpenGL_accelerate module loaded: No module named 'OpenGL_accelerate'
+2025-05-23 19:59:06,777 - root - INFO - 🌀 Iniciando Calendário Maya-Asteca v3.0
+2025-05-23 19:59:06,778 - root - WARNING - PyQt6-Charts não instalado. Gráficos não estarão disponíveis.
+2025-05-23 19:59:08,499 - OpenGL.acceleratesupport - INFO - No OpenGL_accelerate module loaded: No module named 'OpenGL_accelerate'
+2025-05-23 20:01:38,946 - root - INFO - 🌀 Iniciando Calendário Maya-Asteca v3.0
+2025-05-23 20:01:39,130 - OpenGL.acceleratesupport - INFO - No OpenGL_accelerate module loaded: No module named 'OpenGL_accelerate'
+2025-05-23 20:01:39,399 - root - WARNING - Dependências opcionais faltando: PyQt6-Charts (gráficos quânticos)
+2025-05-23 20:01:41,275 - root - INFO - ✅ Sistema inicializado com sucesso
+2025-05-23 20:27:17,530 - root - INFO - 🌀 Iniciando Calendário Maya-Asteca v3.0
+2025-05-23 20:27:17,715 - OpenGL.acceleratesupport - INFO - No OpenGL_accelerate module loaded: No module named 'OpenGL_accelerate'
+2025-05-23 20:27:17,976 - root - WARNING - Dependências opcionais faltando: PyQt6-Charts (gráficos quânticos)
+2025-05-23 20:27:18,217 - root - CRITICAL - ERRO: name 'graph_service' is not defined
+Traceback (most recent call last):
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\main.py", line 29, in main
+    connector = Connector()
+                ^^^^^^^^^^^
+  File "C:\Users\Marcelo\portal\calendario_maya\calendario_maya\core\connector.py", line 32, in __init__
+    self.graph_service = graph_service
+                         ^^^^^^^^^^^^^
+NameError: name 'graph_service' is not defined
+2025-05-23 20:37:07,878 - root - INFO - 🌀 Iniciando Calendário Maya-Asteca v3.0
+2025-05-23 20:37:08,053 - OpenGL.acceleratesupport - INFO - No OpenGL_accelerate module loaded: No module named 'OpenGL_accelerate'
+2025-05-23 20:37:08,312 - root - WARNING - Dependências opcionais faltando: PyQt6-Charts (gráficos quânticos)
+2025-05-23 20:37:10,749 - root - INFO - ✅ Sistema inicializado com sucesso
+2025-05-23 20:37:44,686 - root - ERROR - Erro ao atualizar views: 'CalendarWidget' object has no attribute 'update_display'
+2025-05-23 20:37:46,262 - root - ERROR - Erro ao atualizar views: 'CalendarWidget' object has no attribute 'update_display'
+2025-05-23 20:37:47,310 - root - ERROR - Erro ao atualizar views: 'CalendarWidget' object has no attribute 'update_display'
+2025-05-23 20:37:50,902 - root - ERROR - Erro ao atualizar views: 'CalendarWidget' object has no attribute 'update_display'
+2025-05-23 20:37:51,830 - root - ERROR - Erro ao atualizar views: 'CalendarWidget' object has no attribute 'update_display'
+2025-05-23 20:37:53,166 - root - ERROR - Erro ao atualizar views: 'CalendarWidget' object has no attribute 'update_display'
+2025-05-23 20:37:58,972 - root - INFO - Encerrando aplicação...
+2025-05-23 20:48:01,914 - root - INFO - 🌀 Iniciando Calendário Maya-Asteca v3.0
+2025-05-23 20:48:02,088 - OpenGL.acceleratesupport - INFO - No OpenGL_accelerate module loaded: No module named 'OpenGL_accelerate'
+2025-05-23 20:48:02,340 - root - WARNING - Dependências opcionais faltando: PyQt6-Charts (gráficos quânticos)
+2025-05-23 20:48:04,730 - root - INFO - ✅ Sistema inicializado com sucesso
+2025-05-23 20:48:47,515 - root - INFO - Encerrando aplicação...

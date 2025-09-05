@@ -1,0 +1,114 @@
+[
+  {
+    "year": -3114,
+    "title": "Data Zero do Calendário Maia",
+    "description": "Início da contagem longa no calendário maia.",
+    "sources": ["Códice Dresden"],
+    "type": "mythological"
+  },
+  {
+    "year": -563,
+    "title": "Nascimento de Siddhartha Gautama (Buda)",
+    "description": "Fundador do Budismo, ensinou sobre sofrimento, consciência e iluminação.",
+    "sources": ["Tripitaka", "Escrituras Pali"],
+    "type": "spiritual"
+  },
+  {
+    "year": -469,
+    "title": "Nascimento de Sócrates",
+    "description": "Pai da filosofia ocidental, estimulou o autoconhecimento e a reflexão ética.",
+    "sources": ["Diálogos de Platão", "Xenofonte"],
+    "type": "philosophical"
+  },
+  {
+    "year": -356,
+    "title": "Nascimento de Alexandre, o Grande",
+    "description": "Expandiu o mundo conhecido, levando cultura e ideias entre civilizações.",
+    "sources": ["Plutarco", "Arriano"],
+    "type": "transformational"
+  },
+  {
+    "year": 0,
+    "title": "Nascimento de Jesus Cristo",
+    "description": "Figura central do Cristianismo, símbolo de amor, perdão e transformação espiritual.",
+    "sources": ["Evangelhos Canônicos", "Textos Históricos Romanos"],
+    "type": "spiritual"
+  },
+  {
+    "year": 570,
+    "title": "Nascimento de Maomé",
+    "description": "Fundador do Islã, transmitiu mensagens que transformaram o pensamento e a ética de milhões.",
+    "sources": ["Alcorão", "Hadith"],
+    "type": "spiritual"
+  },
+  {
+    "year": 1209,
+    "title": "Nascimento de Rumi",
+    "description": "Poeta e místico persa, suas palavras elevaram a consciência espiritual e o amor divino.",
+    "sources": ["Masnavi", "Divan-e Shams"],
+    "type": "mystical"
+  },
+  {
+    "year": 1473,
+    "title": "Nascimento de Nicolau Copérnico",
+    "description": "Propôs o modelo heliocêntrico, mudando a percepção humana sobre o cosmos.",
+    "sources": ["De revolutionibus orbium coelestium"],
+    "type": "scientific"
+  },
+  {
+    "year": 1519,
+    "title": "Chegada de Cortés",
+    "description": "Hernán Cortés chega ao território asteca.",
+    "sources": ["Crônicas da Conquista"],
+    "type": "conquest"
+  },
+  {
+    "year": 1564,
+    "title": "Nascimento de Galileu Galilei",
+    "description": "Fundador da ciência moderna, defendeu a observação como base do conhecimento.",
+    "sources": ["Diálogos sobre os dois sistemas do mundo", "Cartas Científicas"],
+    "type": "scientific"
+  },
+  {
+    "year": 1642,
+    "title": "Nascimento de Isaac Newton",
+    "description": "Estabeleceu leis fundamentais da física e mudou para sempre o entendimento do universo físico.",
+    "sources": ["Principia Mathematica"],
+    "type": "scientific"
+  },
+  {
+    "year": 1809,
+    "title": "Nascimento de Charles Darwin",
+    "description": "Propôs a teoria da evolução por seleção natural, transformando a visão sobre a origem da vida.",
+    "sources": ["A Origem das Espécies"],
+    "type": "scientific"
+  },
+  {
+    "year": 1879,
+    "title": "Nascimento de Albert Einstein",
+    "description": "Revolucionou a física com a teoria da relatividade e expandiu os limites da percepção humana sobre tempo e espaço.",
+    "sources": ["Relatividade: A Teoria Especial e Geral"],
+    "type": "scientific"
+  },
+  {
+    "year": 1895,
+    "title": "Nascimento de Carl Jung",
+    "description": "Criou a psicologia analítica, estudou arquétipos e o inconsciente coletivo.",
+    "sources": ["Memórias, Sonhos, Reflexões", "Tipos Psicológicos"],
+    "type": "psychological"
+  },
+  {
+    "year": 1944,
+    "title": "Nascimento de Terence McKenna",
+    "description": "Estudioso das plantas enteógenas e do tempo, propôs novas formas de perceber a consciência e a realidade.",
+    "sources": ["The Invisible Landscape", "Food of the Gods"],
+    "type": "consciousness"
+  },
+  {
+    "year": 1986,
+    "title": "Nascimento de Marcelo Jubilado Catharino",
+    "description": "Criador do Fluxo Matemático, propõe uma nova forma de compreender a matemática, o tempo e o equilíbrio universal através da gratidão.",
+    "sources": ["Fluxo Matemático", "Lei Áurea", "Documentos do Universo Áureo"],
+    "type": "consciousness"
+  }
+]

@@ -1,0 +1,68 @@
+[
+  {
+    "year": -3114,
+    "title": "Data Zero Maia",
+    "category": "Cultural",
+    "description": "Data de criação no calendário maia"
+  },
+  {
+    "year": -1600,
+    "title": "Erupção do Vulcão Thera (Santorini)",
+    "category": "Geológico",
+    "description": "Uma das maiores erupções vulcânicas da história registrada. Possivelmente causou o colapso da civilização minoica."
+  },
+  {
+    "year": -11500,
+    "title": "Fim da Última Era Glacial",
+    "category": "Geológico",
+    "description": "Derretimento de geleiras e aumento do nível do mar, marcando a transição para o Holoceno."
+  },
+  {
+    "year": -7500,
+    "title": "Inundação do Mar Negro",
+    "category": "Geológico",
+    "description": "Evento de transbordamento do mar Mediterrâneo no Mar Negro. Associado a mitos de dilúvio em diversas culturas."
+  },
+  {
+    "year": 79,
+    "title": "Erupção do Vesúvio",
+    "category": "Geológico",
+    "description": "Destruição de Pompéia e Herculano por uma violenta erupção do vulcão Vesúvio, na Itália."
+  },
+  {
+    "year": 536,
+    "title": "Ano Sem Verão",
+    "category": "Cataclismo",
+    "description": "Explosões vulcânicas (provavelmente na Islândia) causaram resfriamento global, escuridão e fome em várias partes do mundo."
+  },
+  {
+    "year": 1815,
+    "title": "Erupção do Monte Tambora",
+    "category": "Geológico",
+    "description": "Maior erupção vulcânica dos últimos 10 mil anos, causou alterações climáticas e o 'ano sem verão' em 1816."
+  },
+  {
+    "year": 1883,
+    "title": "Erupção do Krakatoa",
+    "category": "Geológico",
+    "description": "Explosão catastrófica entre Java e Sumatra, gerou tsunamis e mudanças globais no clima."
+  },
+  {
+    "year": 1906,
+    "title": "Terremoto de São Francisco",
+    "category": "Catástrofe Natural",
+    "description": "Um dos terremotos mais destrutivos dos EUA, com incêndios e mortes em larga escala."
+  },
+  {
+    "year": 2004,
+    "title": "Tsunami do Oceano Índico",
+    "category": "Catástrofe Natural",
+    "description": "Um terremoto de magnitude 9.1 causou um dos tsunamis mais letais da história, afetando 14 países e matando mais de 230 mil pessoas."
+  },
+  {
+    "year": 2024,
+    "title": "Fim do 13º Baktun",
+    "category": "Cultural",
+    "description": "Conclusão do grande ciclo maia"
+  }
+]

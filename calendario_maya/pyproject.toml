@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "calendario_maya"
+version = "1.0.0"
+description = "Calendário Maia com interface gráfica e cálculos astronômicos"
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "PyQt6>=6.0.0",
+    "numpy>=1.20.0",
+    "pyephem>=4.1.0",
+]
+
+[tool.setuptools]
+packages = ["calendario_maya"]
+
+[tool.setuptools.package-data]
+"calendario_maya" = ["data/*.json", "interface/assets/*"]

@@ -1,0 +1,70 @@
+/* Estilo base - Fundo cósmico */
+QWidget {
+    background-color: #0a043c;
+    color: #e0e0e0;
+    font-family: 'Arial';
+    font-size: 12px;
+    selection-background-color: #6a3093;
+}
+
+/* Label destacado */
+QLabel {
+    color: #4ecca3;
+    font-size: 12px;
+}
+
+/* Componentes específicos */
+QGraphicsView {
+    background-color: #0a043c;
+    border: 1px solid #1a1a5a;
+    border-radius: 4px;
+}
+
+QToolTip {
+    background-color: #1a1a2e;
+    color: #e0e0e0;
+    border: 2px solid #6a3093;
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+/* Classes de estado */
+.aligned {
+    background-color: #4ecca320;
+    border: 1px solid #4ecca3;
+}
+
+.error {
+    background-color: #ff000020;
+    border: 1px solid #ff0000;
+}
+
+/* Botões interativos */
+QPushButton {
+    background-color: #6a3093;
+    color: white;
+    padding: 8px;
+    border: 1px solid #8a50b3;
+    border-radius: 4px;
+    min-width: 80px;
+}
+
+QPushButton:hover {
+    background-color: #8a50b3;
+}
+
+QPushButton:pressed {
+    background-color: #4a1083;
+}
+
+/* Scroll vertical */
+QScrollBar:vertical {
+    background: #0a043c;
+    width: 12px;
+}
+
+QScrollBar::handle:vertical {
+    background: #6a3093;
+    min-height: 20px;
+}

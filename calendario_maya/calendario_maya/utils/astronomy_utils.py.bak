@@ -1,0 +1,124 @@
+# astronomy_utils.py (versão atualizada)
+import math
+from typing import Dict, List, Tuple
+from dataclasses import dataclass
+
+@dataclass
+class CosmicCycle:
+    name: str
+    days: int
+    frequency: float  # Hz
+    glyph_sequence: List[int]
+
+# Ciclos fundamentais
+CYCLES = {
+    'tzolkin': CosmicCycle('Tzolk\'in', 260, 136.1, list(range(1, 261))),
+    'venus': CosmicCycle('Venus', 584, 221.23, [3, 8, 11, 16, 19, 24]),
+    'galactic': CosmicCycle('Galáctico', 26000, 1.36, list(range(1, 26001)))
+}
+
+# Adicione estas funções ao arquivo existente
+def calculate_cycles(target_date=None):
+    """Calcula os ciclos principais baseados em Fibonacci"""
+    if target_date is None:
+        target_date = datetime.now()
+    
+    # Cálculos base mantidos
+    venus_pos = calculate_venus_position(target_date)
+    earth_pos = calculate_earth_position(target_date)
+    
+    # Novos cálculos de ciclo
+    cycles = {
+        'tzolkin': (venus_pos['degree'] + earth_pos['degree']) % 260,
+        'harmonic': (venus_pos['speed'] * earth_pos['speed']) / 136.1,
+        'fibonacci_sequence': generate_fibonacci_sequence(target_date)
+    }
+    return cycles
+
+def generate_fibonacci_sequence(date_obj):
+    """Gera sequência Fibonacci modificada para a data"""
+    day_of_year = date_obj.timetuple().tm_yday
+    a, b = 0, 1
+    sequence = []
+    for _ in range(8):  # 8 números da sequência
+        a, b = b, a + b
+        sequence.append((day_of_year + a) % 260)  # Ajusta para ciclo Tzolk'in
+    return sequence
+
+def calculate_alignment(cycle_type: str, current_position: int) -> Dict:
+    """Calcula próximos alinhamentos baseados em ciclos e glifos"""
+    cycle = CYCLES[cycle_type]
+    
+    # Cálculo Fibonacci-modificado
+    fib_seq = [8, 13, 21, 34, 55, 89]
+    next_alignments = [
+        (current_position + fib) % cycle.days
+        for fib in fib_seq
+    ]
+    
+    return {
+        'cycle': cycle.name,
+        'current_glyph': cycle.glyph_sequence[current_position % len(cycle.glyph_sequence)],
+        'next_alignments': sorted(next_alignments),
+        'resonance_frequencies': [cycle.frequency * (fib/34) for fib in fib_seq]
+    }
+
+def find_cross_cycle_alignments() -> List[Dict]:
+    """Encontra alinhamentos entre diferentes ciclos"""
+    significant_alignments = []
+    
+    # Verifica cada combinação de ciclos
+    for cycle1 in CYCLES.values():
+        for cycle2 in CYCLES.values():
+            if cycle1.name == cycle2.name:
+                continue
+                
+            # Encontra pontos de ressonância
+            common_days = lcm(cycle1.days, cycle2.days)
+            alignment_points = [
+                (common_days // cycle1.days) * i 
+                for i in range(1, 5)  # Próximos 4 alinhamentos
+            ]
+            
+            significant_alignments.append({
+                'cycles': f"{cycle1.name}-{cycle2.name}",
+                'alignment_days': alignment_points,
+                'harmonic_frequency': (cycle1.frequency + cycle2.frequency)/2
+            })
+    
+    return significant_alignments
+
+def lcm(a: int, b: int) -> int:
+    """Calcula mínimo múltiplo comum"""
+    return abs(a*b) // math.gcd(a, b)
+
+def get_current_cycle_positions() -> Dict:
+    """Retorna posições atuais em todos os ciclos"""
+    from datetime import datetime
+    now = datetime.now()
+    
+    return {
+        'tzolkin': (now.timetuple().tm_yday + 120) % 260,
+        'venus': (now.timetuple().tm_yday * 584 // 365) % 584,
+        'galactic': (now.year - 2012) % 26000
+    }
+    
+def calculate_cosmic_data(target_date):
+    """Versão corrigida usando MayanAstronomy"""
+    try:
+        mayan_astro = MayanAstronomy()
+        
+        if isinstance(target_date, int):  # Apenas ano
+            target_date = date(target_date, 1, 1)
+            
+        positions = mayan_astro.get_planetary_positions(target_date)
+        
+        return {
+            'earth_position': positions['terra']['position'],
+            'venus_position': positions['venus']['position'],
+            'galactic_angle': mayan_astro.galactic_year_progress(target_date) * 360,
+            'galactic_progress': mayan_astro.galactic_year_progress(target_date) * 100
+        }
+    except Exception as e:
+        print(f"Erro em calculate_cosmic_data: {str(e)}")
+        return None

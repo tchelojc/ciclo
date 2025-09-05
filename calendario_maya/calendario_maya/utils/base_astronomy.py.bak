@@ -1,0 +1,12 @@
+# calendario_maya/utils/base_astronomy.py
+
+class BaseMayanAstronomy:
+    """
+    Classe base para cálculos astronômicos maias. 
+    Usada como superclasse para implementações mais simples ou complexas.
+    """
+    def __init__(self):
+        pass
+
+    def get_info(self):
+        return {"info": "Base Mayan Astronomy"}

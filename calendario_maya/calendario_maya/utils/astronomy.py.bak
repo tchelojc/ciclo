@@ -1,0 +1,391 @@
+import ephem
+import numpy as np
+from datetime import datetime, date, timedelta
+from math import degrees, radians, log, sqrt, sin, cos
+from typing import Optional, Dict, Any, Tuple
+from constants.fisica import (
+    VELOCIDADE_LUZ,
+    CONSTANTE_GRAVITACIONAL,
+    ANO_LUZ,
+    MASSA_SOLAR,
+    ANO_GALACTICO,
+    CICLO_MAIA,
+    FATOR_COSMICO,
+    calcular_dilatacao_temporal,
+    CONSTANTE_SOLAR,
+    VENUS_RADIUS
+)
+
+def get_constellation_positions(date=None, hemisphere="Norte"):
+    """Retorna as posições simplificadas de constelações visíveis por hemisfério em uma data específica."""
+    if date is None:
+        date = datetime.utcnow()
+
+    # Constelações com estrelas e conexões
+    constellations = {
+        "Ursa Maior": {
+            "stars": [
+                {"name": "Dubhe", "ra": 165, "dec": 56, "magnitude": 1.8},
+                {"name": "Merak", "ra": 155, "dec": 49, "magnitude": 2.4},
+                {"name": "Phecda", "ra": 150, "dec": 47, "magnitude": 2.4},
+                {"name": "Megrez", "ra": 147, "dec": 57, "magnitude": 3.3},
+            ],
+            "lines": [(0, 1), (1, 2), (2, 3)]
+        },
+        "Órion": {
+            "stars": [
+                {"name": "Betelgeuse", "ra": 88.8, "dec": 7.4, "magnitude": 0.42},
+                {"name": "Bellatrix", "ra": 81.3, "dec": 6.3, "magnitude": 1.6},
+                {"name": "Alnilam", "ra": 84.1, "dec": -1.2, "magnitude": 1.7},
+                {"name": "Rigel", "ra": 78.6, "dec": -8.2, "magnitude": 0.12}
+            ],
+            "lines": [(0, 1), (1, 2), (2, 3)]
+        },
+        "Cruzeiro do Sul": {
+            "stars": [
+                {"name": "Acrux", "ra": 186.65, "dec": -63.1, "magnitude": 0.76},
+                {"name": "Becrux", "ra": 191.93, "dec": -59.7, "magnitude": 1.25},
+                {"name": "Gacrux", "ra": 172.78, "dec": -57.1, "magnitude": 1.63}
+            ],
+            "lines": [(0, 1), (1, 2)]
+        }
+    }
+
+    # Filtra constelações visíveis no hemisfério
+    filtered = {}
+    for name, data in constellations.items():
+        reference_dec = data["stars"][0]["dec"]
+        if (hemisphere == "Norte" and reference_dec >= 0) or (hemisphere == "Sul" and reference_dec < 0):
+            filtered[name] = data
+
+    return filtered
+
+class MayanAstronomy:
+    def __init__(self, connector=None):
+        self.connector = connector
+        self.observer = ephem.Observer()
+        self.set_tikal_location()
+        
+        # Constantes fundamentais
+        REFERENCE_DATE = date(2012, 12, 21)  # Data de referência
+        self.VENUS_SYNODIC = 583.92  # Dias (ciclo sinódico de Vênus)
+        self.GALACTIC_CENTER = (266.4, -28.9)  # Coordenadas do centro galáctico
+        self.BLACK_HOLE_POS = (266.4168, -29.0078)  # Sagittarius A* posição
+        
+        # Fatores de conversão
+        self.KIN_ENERGY = (VELOCIDADE_LUZ**2) * 1e-7
+        self.TIME_WARP_FACTOR = sqrt(ANO_GALACTICO / CICLO_MAIA)
+        
+        # Cache para otimização
+        self._cache = {
+            'venus': {},
+            'cosmic': {},
+            'galactic': {}
+        }
+
+    def _normalize_date(self, date):
+        """Converte QDate, datetime ou date para datetime.date"""
+        if hasattr(date, 'toPyDate'):  # Se for QDate
+            return date.toPyDate()
+        elif hasattr(date, 'date'):  # Se for datetime
+            return date.date()
+        return date  # Assume que já é date ou não pode converter
+    
+    def set_tikal_location(self) -> None:
+        """Configuração precisa do observador em Tikal"""
+        self.observer.lat = '17.222'
+        self.observer.long = '-89.624'
+        self.observer.elevation = 200
+        self.observer.pressure = 0
+        self.observer.horizon = '-0:34'
+        self.observer.temp = 25
+
+    def calculate_galactic_venus_cycles(self, date_obj: date) -> Dict[str, Any]:
+        """
+        Calcula a posição de Vênus em relação ao centro galáctico
+        Retorna:
+        - distância angular
+        - fase quântica
+        - alinhamentos significativos
+        """
+        date_obj = self._normalize_date(date_obj)
+        
+        if date_obj in self._cache['galactic']:
+            return self._cache['galactic'][date_obj]
+        
+        try:
+            self.observer.date = date_obj
+            venus = ephem.Venus()
+            venus.compute(self.observer)
+            
+            # Posição galáctica
+            venus_ra = degrees(venus.ra)
+            venus_dec = degrees(venus.dec)
+            
+            # Distância angular ao centro galáctico
+            angular_dist = self._angular_distance(
+                (venus_ra, venus_dec),
+                self.GALACTIC_CENTER
+            )
+            
+            # Distância ao buraco negro central
+            bh_dist = self._angular_distance(
+                (venus_ra, venus_dec),
+                self.BLACK_HOLE_POS
+            )
+            
+            days_since_2012 = (date_obj - self.REFERENCE_DATE).days
+            venus_cycles = days_since_2012 / self.VENUS_SYNODIC
+            
+            result = {
+                'date': date_obj.isoformat(),
+                'angular_dist_gc': angular_dist,
+                'angular_dist_bh': bh_dist,
+                'venus_phase': degrees(venus.phase),
+                'quantum_phase': self._quantum_phase(venus_cycles),
+                'cycles_since_2012': venus_cycles,
+                'next_alignment': self._next_venus_galactic_alignment(date_obj),
+                'energy_level': self._calculate_venus_energy(venus),
+                'galactic_year': self._galactic_year_progress(date_obj)
+            }
+            
+            self._cache['galactic'][date_obj] = result
+            return result
+            
+        except Exception as e:
+            print(f"Erro no cálculo galáctico: {e}")
+            return {'error': str(e)}
+
+    def _angular_distance(self, pos1, pos2) -> float:
+        """Calcula distância angular entre duas posições (RA, Dec)"""
+        ra1, dec1 = radians(pos1[0]), radians(pos1[1])
+        ra2, dec2 = radians(pos2[0]), radians(pos2[1])
+        
+        return degrees(
+            acos(sin(dec1)*sin(dec2) + cos(dec1)*cos(dec2)*cos(ra1-ra2))
+        )
+
+    def _galactic_year_progress(self, date_obj: date) -> float:
+        """Progresso através do ano galáctico (0-1)"""
+        galactic_year_days = ANO_GALACTICO * 365.25
+        days_since_epoch = (date_obj - self.REFERENCE_DATE).days
+        return (days_since_epoch % galactic_year_days) / galactic_year_days
+
+    def _next_venus_galactic_alignment(self, date_obj: date) -> Dict[str, Any]:
+        """Calcula o próximo alinhamento significativo de Vênus"""
+        self.observer.date = date_obj
+        venus = ephem.Venus()
+        
+        # Encontra próximas conjunções com o centro galáctico
+        next_conjunctions = []
+        for i in range(3):  # Próximos 3 alinhamentos
+            next_date = date_obj + timedelta(days=i * self.VENUS_SYNODIC)
+            self.observer.date = next_date
+            venus.compute(self.observer)
+            
+            angular_dist = self._angular_distance(
+                (degrees(venus.ra), degrees(venus.dec)),
+                self.GALACTIC_CENTER
+            )
+            
+            if angular_dist < 5:  # Considera alinhamento abaixo de 5 graus
+                next_conjunctions.append({
+                    'date': next_date.isoformat(),
+                    'angular_distance': angular_dist,
+                    'energy_level': self._calculate_venus_energy(venus)
+                })
+        
+        return {
+            'next_alignments': next_conjunctions,
+            'current_cycle': self._current_venus_cycle(date_obj)
+        }
+
+    def _current_venus_cycle(self, date_obj: date) -> Dict[str, Any]:
+        """Detalhes do ciclo atual de Vênus"""
+        days_since_2012 = (date_obj - self.REFERENCE_DATE).days
+        current_cycle = days_since_2012 / self.VENUS_SYNODIC
+        
+        return {
+            'cycle_number': int(current_cycle),
+            'cycle_progress': current_cycle % 1,
+            'days_to_next': int(self.VENUS_SYNODIC * (1 - (current_cycle % 1)))
+        }
+
+    def get_cosmic_calendar(self, date_obj: date) -> Dict[str, Any]:
+        """
+        Combina calendário maia, ciclo de Vênus e posição galáctica
+        Retorna uma estrutura unificada para geração de gráficos
+        """
+        venus_data = self.calculate_galactic_venus_cycles(date_obj)
+        cosmic_time = self.get_cosmic_time(date_obj)
+        
+        return {
+            'date': date_obj.isoformat(),
+            'mayan_calendar': cosmic_time,
+            'venus_cycles': venus_data,
+            'harmonic_convergence': self._harmonic_convergence(date_obj),
+            'energy_matrix': self.get_venus_matrix(date_obj)
+        }
+
+    def _harmonic_convergence(self, date_obj: date) -> float:
+        """
+        Calcula o fator de convergência harmônica entre:
+        - Ciclo maia
+        - Ciclo de Vênus
+        - Posição galáctica
+        """
+        days_since_2012 = (date_obj - self.REFERENCE_DATE).days
+        
+        # Ciclos normalizados
+        maya_cycle = (days_since_2012 % CICLO_MAIA) / CICLO_MAIA
+        venus_cycle = (days_since_2012 % self.VENUS_SYNODIC) / self.VENUS_SYNODIC
+        galactic_cycle = self._galactic_year_progress(date_obj)
+        
+        # Fator de convergência (0-1)
+        return (1 - abs(maya_cycle - venus_cycle)) * (1 - abs(venus_cycle - galactic_cycle))
+
+    def generate_venus_galactic_chart(self, start_date: date, end_date: date) -> Dict[str, Any]:
+        """
+        Gera dados para gráfico da relação Vênus-Galáxia
+        no período especificado
+        """
+        current_date = start_date
+        delta = timedelta(days=1)
+        chart_data = []
+        
+        while current_date <= end_date:
+            data = self.calculate_galactic_venus_cycles(current_date)
+            if 'error' not in data:
+                chart_data.append({
+                    'date': current_date.isoformat(),
+                    'angular_dist': data['angular_dist_gc'],
+                    'energy': data['energy_level'],
+                    'harmonic': self._harmonic_convergence(current_date)
+                })
+            current_date += delta
+        
+        return {
+            'metadata': {
+                'start_date': start_date.isoformat(),
+                'end_date': end_date.isoformat(),
+                'venus_cycles': len(chart_data)/self.VENUS_SYNODIC
+            },
+            'data_points': chart_data
+        }
+
+    def get_significant_dates(self, years: int = 10) -> Dict[str, Any]:
+        """
+        Encontra datas significativas nos próximos anos onde:
+        - Vênus está alinhado com centro galáctico
+        - Coincide com ciclos maias importantes
+        - Altos níveis de convergência harmônica
+        """
+        end_date = datetime.now().date() + timedelta(days=365*years)
+        significant_dates = []
+        
+        # Verifica cada dia do ciclo de Vênus
+        venus_days = int(years * 365 / self.VENUS_SYNODIC)
+        for i in range(venus_days):
+            check_date = datetime.now().date() + timedelta(days=i * self.VENUS_SYNODIC)
+            data = self.calculate_galactic_venus_cycles(check_date)
+            
+            if data['angular_dist_gc'] < 5:  # Alinhamento próximo
+                cosmic = self.get_cosmic_time(check_date)
+                harmonic = self._harmonic_convergence(check_date)
+                
+                if harmonic > 0.8:  # Alta convergência
+                    significant_dates.append({
+                        'date': check_date.isoformat(),
+                        'angular_dist': data['angular_dist_gc'],
+                        'harmonic': harmonic,
+                        'mayan_date': cosmic,
+                        'energy': data['energy_level']
+                    })
+        
+        return {
+            'analysis_period': f"{years} years",
+            'significant_dates': sorted(significant_dates, key=lambda x: x['harmonic'], reverse=True),
+            'strongest_alignment': max(significant_dates, key=lambda x: x['harmonic']) if significant_dates else None
+        }
+
+    # Mantém os métodos existentes (get_venus_matrix, _quantum_phase, etc.) com pequenas melhorias
+    def get_venus_matrix(self, date_obj: date) -> np.ndarray:
+        """Matriz quântica 13x20 aprimorada"""
+        date_obj = self._normalize_date(date_obj)
+        cycles = self.calculate_galactic_venus_cycles(date_obj)['cycles_since_2012']
+        
+        matrix = np.zeros((13, 20))
+        for i in range(13):
+            for j in range(20):
+                # Combina ciclo de Vênus com harmônicos 13 e 20
+                matrix[i][j] = (cycles + (i+1)*(j+1)/260) % 1
+                
+        return matrix
+    
+    def calculate_cosmic_data(target_date):
+        """
+        Versão robusta para cálculo de dados cósmicos
+        """
+        try:
+            # Se for apenas um ano (inteiro)
+            if isinstance(target_date, int):
+                if target_date <= 0:  # BCE dates
+                    return {
+                        'earth_position': (abs(target_date) * 0.9856) % 360,
+                        'venus_position': (abs(target_date) * 1.602) % 360,
+                        'galactic_angle': 0,
+                        'galactic_progress': 0
+                    }
+                target_date = datetime(target_date, 1, 1).date()
+        
+            # Converter para date se for datetime
+            if hasattr(target_date, 'date'):
+                target_date = target_date.date()
+            
+            # Cálculos modernos (pós-1582)
+            if target_date.year >= 1582:
+                jd = julian_day(target_date.year, target_date.month, target_date.day)
+                earth_pos = calculate_earth_position(jd)
+                venus_pos = calculate_venus_position(jd)
+                galactic_angle = calculate_galactic_angle(jd)
+            
+                base_date = date(2012, 12, 21)
+                days_passed = (target_date - base_date).days
+                galactic_progress = (days_passed / 25920) * 100
+            
+                return {
+                    'earth_position': earth_pos,
+                    'venus_position': venus_pos,
+                    'galactic_angle': galactic_angle,
+                    'galactic_progress': galactic_progress
+                }
+            else:
+                # Cálculos aproximados para datas antigas
+                days_since_2012 = (target_date - date(2012, 12, 21)).days
+                return {
+                    'earth_position': (days_since_2012 % 365) * 0.9856,
+                    'venus_position': (days_since_2012 % 584) * 0.616,
+                    'galactic_angle': 0,
+                    'galactic_progress': (days_since_2012 / 25920) * 100
+                }
+            
+        except Exception as e:
+            print(f"Erro em calculate_cosmic_data: {str(e)}")
+            return None
+
+    def _calculate_ancient_data(self, year):
+        """Cálculos aproximados para anos BCE"""
+        try:
+            # Converter ano BCE para ano astronômico (1 BCE = 0, 2 BCE = -1, etc.)
+            astro_year = year if year > 0 else (year * -1) + 1
+        
+            return {
+                'earth_position': (astro_year * 0.9856) % 360,  # Aproximação
+                'venus_position': (astro_year * 1.602) % 360,
+                'galactic_angle': (astro_year * 0.014) % 360,
+                'julian_day': 0
+            }
+        except Exception as e:
+            print(f"Erro em _calculate_ancient_data: {str(e)}")
+            return None
+        

@@ -1,0 +1,820 @@
+import logging
+from PyQt6.QtCore import QObject, pyqtSignal, QDate, QThread  # Adicione QThread aqui
+from PyQt6.QtWidgets import QWidget  # Adicionado para o factory de widgets
+from pathlib import Path
+from config import path_manager 
+import os
+import json
+import importlib
+from datetime import datetime  # Adicionado datetime para conversões
+from typing import Dict, Any, Optional, Callable  # Adicionado para type hints
+from utils.mayan_math import MayanMath
+
+# Importe suas classes de calendário e o data_bridge
+from .calendario_cosmico import CalendarioCosmico
+# from .calendario import CalendarioSagrado # Descomente se for usar para algumas conversões
+from .data_bridge import data_bridge # Para interagir com o data_bridge, se necessário
+from calendario_maya.utils.mayan_astronomy import MayanAstronomy
+from calendario_maya.utils.basic_astronomy import BasicAstronomy
+from calendario_maya.utils.timeline import TimelineWidget
+
+class QuantumMayanMathPlaceholder:
+    @staticmethod
+    def calculate_venus_quantum_cycle(date):
+        return {
+            'quantum_phase': 0.0,
+            'distance': 0.7,
+            'significance': 'Kukulkán (Placeholder)'
+        }
+    
+    @staticmethod
+    def calculate_galactic_alignment(date):
+        return {
+            'quantum_entanglement': 0.5,
+            'alignment': 'Partial (Placeholder)'
+        }
+
+# Substitua no método get_celestial_data:
+QuantumMayanMath = QuantumMayanMathPlaceholder
+
+class Connector(QObject):
+    VERSION = "3.0"
+    date_changed = pyqtSignal(QDate)
+    data_loaded = pyqtSignal()  # ✅ Adicionado para corrigir o erro
+    
+    def __init__(self, data_path=None):
+        print("🔄 Iniciando Connector...")
+        super().__init__()
+        print("🔹 QObject inicializado")
+        self.data_path = self._get_default_data_path()
+        self.version = self.VERSION
+        self._utils_modules: Dict[str, Any] = {}
+        self.tzolk_data: Dict[str, Any] = {}
+        self.tonal_data: Dict[str, Any] = {}
+        self.long_count_data: Dict[str, Any] = {}
+        self._current_date = QDate.currentDate()  # Adicionado
+    
+        # Adicionado: Flag de inicialização
+        self._initialized = False
+    
+        try:
+            self.graph_service = self._initialize_graph_service()
+            self._setup_graph_connector() 
+               
+            self._historical_events: Optional[list] = None
+            self.current_qdate: Optional[QDate] = None
+
+            self._load_core_data_config()
+            self._setup_utility_modules()
+        
+            self.calendario_cosmico = CalendarioCosmico()
+            self._setup_astronomy_module()
+            self._widget_classes: Dict[str, Any] = {}
+        
+            # Marca como inicializado somente se tudo carregou
+            self._initialized = bool(self.tzolk_data and self.tonal_data)
+        
+            print(f"🌀 Connector v{self.version} inicializado.")
+        except Exception as e:
+            print(f"ERRO na inicialização do Connector: {e}")
+            self._initialized = False
+            raise
+
+    @property
+    def current_date(self):
+        return self._current_date
+        
+    @current_date.setter
+    def current_date(self, date):
+        if date != self._current_date:
+            self._current_date = date
+            self.date_changed.emit(date)
+
+    def get_prophecy_data(self, date=None):
+        """Carrega dados proféticos com fallback seguro"""
+        try:
+            prophecy_path = self.get_data_path('prophecy_data.json')
+        
+            if not prophecy_path.exists():
+                return self.generate_basic_prophecies()
+            
+            with open(prophecy_path, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+            
+            date = date or self.current_date.toPyDate()
+            return self.filter_prophecies_by_date(data, date)
+        
+        except Exception as e:
+            print(f"Erro carregando profecias: {e}")
+            return self.generate_basic_prophecies()
+
+    def generate_basic_prophecies(self):
+        """Gera profecias básicas para o novo ciclo"""
+        return [{
+            'title': 'Fim do 13º Baktun',
+            'year': 2012,
+            'description': 'Transição para o novo ciclo galáctico',
+            'alignment': True,
+            'cosmic_data': {
+                'baktun': 13.0,
+                'venus_phase': 0.0,
+                'galactic_progress': 0.0,
+                'earth_angle': 0.0
+            }
+        }]
+        
+    @property
+    def initialized(self):
+        return self._initialized
+        
+    def get_data_path(self, filename=None):
+        """Retorna caminho absoluto para arquivos de dados"""
+        base_path = Path(__file__).parent.parent / "data"
+        if not base_path.exists():
+            base_path.mkdir(parents=True)
+
+        if filename:
+            full_path = base_path / filename
+            if not full_path.exists():
+                raise FileNotFoundError(f"Arquivo de dados não encontrado: {full_path}")
+            return full_path
+        return base_path
+        
+    def _get_default_data_path(self):
+        """Determina o caminho padrão para os dados"""
+        return Path(__file__).parent / "data"
+    
+    def _load_core_data_config(self):
+        """Carrega e valida os arquivos JSON principais"""
+        print("Connector: Carregando configurações e dados base...")
+    
+        self.tzolk_data = self._load_and_validate_json('tzolk.json', required_keys=['nahuales', 'constantes'])
+        self.tonal_data = self._load_and_validate_json('tonalpohualli.json', required_keys=['signos'])
+        self.long_count_data = self._load_json_from_root('longcount.json', optional=True)
+    
+        if self.tzolk_data: 
+            data_bridge.tzolk_data = self.tzolk_data
+        if self.tonal_data: 
+            data_bridge.tonal_data = self.tonal_data
+        
+        if self.tzolk_data and self.tonal_data:
+            self.data_loaded.emit()
+            print("  Dados Tzolk'in e Tonalpohualli carregados")
+        else:
+            print("  AVISO: Falha ao carregar arquivos principais")
+
+    def _load_and_validate_json(self, filename, required_keys):
+        data = self._load_json_from_root(filename)
+    
+        if not data:
+            data = {}
+    
+        if filename == 'tzolk.json':
+            if 'constantes' not in data:
+                data['constantes'] = {
+                    'ciclo_sagrado': 260,
+                    'kin_por_uinal': 20,
+                    'uinales_por_tun': 18,
+                    'dias_por_tun': 360
+                }
+            if 'nahuales' not in data:
+                data['nahuales'] = []
+    
+        return data
+
+    def _initialize_graph_service(self):
+        """Inicialização segura do serviço de gráficos"""
+        try:
+            # Tenta carregar o serviço real
+            from services.graph_service import GraphService
+            service = GraphService()
+            service._has_charts = True
+            return service
+        except (ImportError, AttributeError) as e:
+            print(f"⚠️ GraphService não disponível - Modo básico: {str(e)}")
+        
+            # Fallback mínimo que não quebra o sistema
+            class DummyService:
+                _has_charts = False
+                def __getattr__(self, name):
+                    return lambda *args, **kwargs: None
+                
+            return DummyService()
+    
+    def _setup_graph_connector(self):
+        """Configura o sistema de gráficos com fallback elegante"""
+        if not hasattr(self.graph_service, '_has_charts') or not self.graph_service._has_charts:
+            print("🔶 Modo básico ativado (gráficos simplificados)")
+        
+            # Cria dados simulados consistentes
+            self.graph_data = {
+                'status': 'simulated',
+                'series': [{'name': 'Dados Básicos', 'values': []}]
+            }
+        
+            # Fallback para o math_viewer
+            from interface.widgets.basic_math import BasicMathViewer
+            self.QuantumMathViewer = BasicMathViewer
+        else:
+            try:
+                from interface.widgets.math_viewer import QuantumMathViewer
+                self.QuantumMathViewer = QuantumMathViewer
+            except ImportError:
+                print("🔶 QuantumMathViewer não disponível - usando modo básico")
+                from interface.widgets.basic_math import BasicMathViewer
+                self.QuantumMathViewer = BasicMathViewer
+            
+    def _load_json_from_root(self, filename: str, optional: bool = False) -> dict:
+        """Carrega arquivos JSON com verificação robusta
+        Args:
+            filename: Nome do arquivo (ex: 'tzolk.json')
+            optional: Se True, não mostra erro se o arquivo não existir
+        """
+        file_path = path_manager.get(filename)
+    
+        if not file_path:
+            if not optional:
+                print(f"ERRO: Arquivo {filename} não encontrado")
+            return {}
+
+        try:
+            with open(file_path, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+                print(f"✅ {filename} carregado com sucesso de: {file_path}")
+                return data
+        except Exception as e:
+            if not optional:
+                print(f"ERRO ao ler {filename}: {e}")
+            return {}
+
+    def _load_json_data(self, filename):
+        """Carrega arquivos JSON com tratamento robusto"""
+        try:
+            path = self._get_data_path(filename)
+            if not path.exists():
+                return self._generate_fallback_data(filename)
+            
+            with open(path, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+            
+            # Adiciona cálculos de ciclo aos dados carregados
+            if 'events' in data:
+                for event in data['events']:
+                    event['cycles'] = self._calculate_event_cycles(event)
+                
+            return data
+        
+        except Exception as e:
+            print(f"Erro ao carregar {filename}: {e}")
+            return self._generate_fallback_data(filename)
+        
+    def _calculate_event_cycles(self, event):
+        """Calcula ciclos para um evento histórico"""
+        try:
+            date_str = event.get('date')
+            if not date_str:
+                return {}
+            
+            date_obj = datetime.strptime(date_str, '%d/%m/%Y')
+            return {
+                'tzolkin': (date_obj.timetuple().tm_yday + 120) % 260,
+                'fibonacci': self._generate_fibonacci_position(date_obj)
+            }
+        except:
+            return {}
+        
+    def load_glyph_data(self):
+        """Carrega os dados dos glifos sagrados"""
+        try:
+            glyph_path = self.get_data_path('tzolk.json')  # Usando o método existente
+            if not glyph_path.exists():
+                raise FileNotFoundError(f"Arquivo não encontrado: {glyph_path}")
+            
+            with open(glyph_path, 'r', encoding='utf-8') as f:
+                self.glyph_data = json.load(f)
+            return True
+        except Exception as e:
+            self.logger.error(f"Erro ao carregar glifos: {str(e)}")
+            self.glyph_data = {}
+            return False
+        
+    def load_timeline_events(self):
+        try:
+            from core.config import get_timeline_events_path
+            path = get_timeline_events_path()
+            if not path.exists():
+                raise FileNotFoundError(f"Arquivo não encontrado: {path}")
+        
+            with open(path, 'r', encoding='utf-8') as f:
+                self.timeline_events = json.load(f)
+        except Exception as e:
+            print(f"Erro ao carregar eventos: {e}")
+            self.timeline_events = []
+
+    # No arquivo do Connector
+    def _load_astronomy_module(self):
+        """Carrega módulo de astronomia com fallback"""
+        try:
+            from calendario_maya.utils.mayan_astronomy import MayanAstronomy
+            self.astronomy = MayanAstronomy()
+        except ImportError:
+            from utils.cosmos_view import CosmosViewBase as FallbackAstro
+            self.astronomy = FallbackAstro()
+            logging.warning("Usando fallback astronômico")
+        
+    def _setup_utility_modules(self):
+        """Carrega módulos da pasta 'utils' de forma centralizada."""
+        print("Connector: Configurando módulos utilitários...")
+        utils_to_load = ['astronomy', 'cache', 'historical', 'timeline'] # Especifique os módulos
+        for module_name in utils_to_load:
+            try:
+                module = importlib.import_module(f'utils.{module_name}')
+                self._utils_modules[module_name] = module
+                print(f"  Módulo utilitário carregado: utils.{module_name}")
+            except ImportError as e:
+                print(f"⚠️ Falha ao carregar módulo utilitário utils.{module_name}: {e}")
+        print("  Módulos utilitários configurados.")
+
+# No core/connector.py
+    def _setup_astronomy_module(self):
+        """Configura o módulo de astronomia"""
+        print("Connector: Configurando módulo de astronomia...")
+        try:
+            from calendario_maya.utils.mayan_astronomy import MayanAstronomy
+            self.astronomy = MayanAstronomy(self)
+            print("✅ Módulo astronômico inicializado")
+        except Exception as e:
+            print(f"⚠️ Falha crítica no módulo astronômico: {str(e)}")
+            self.astronomy = None
+            
+    def get_astronomical_data(self, date):
+        """Retorna dados astronômicos completos para visualização no CosmosViewer"""
+        try:
+            # Converte QDate para datetime se necessário
+            if hasattr(date, 'toPyDate'):
+                py_date = date.toPyDate()
+            else:
+                py_date = date
+
+            epoch = datetime(2012, 12, 21).date()
+            days_since_epoch = (py_date - epoch).days
+        
+            # Obtém dados básicos
+            base_data = {
+                'date': py_date.isoformat(),
+                'days_since_epoch': days_since_epoch,
+                'tzolkin_day': (days_since_epoch % 260) + 1
+            }
+        
+            # Adiciona cálculos astronômicos
+            astronomical_data = self._calculate_astronomical_positions(py_date)
+        
+            # Adiciona significados culturais
+            cultural_data = self._get_cultural_interpretations(py_date)
+
+            return {**base_data, **astronomical_data, **cultural_data}
+        
+        except Exception as e:
+            logging.error(f"Erro ao calcular dados astronômicos: {e}")
+            return self._get_fallback_astronomical_data()
+
+    def _calculate_astronomical_positions(self, days_since_epoch):
+        """Usar MayanAstronomy para cálculos precisos"""
+        try:
+            date_obj = self.REFERENCE_DATE + timedelta(days=days_since_epoch)
+            astronomy = MayanAstronomy()
+            return astronomy.get_planetary_positions(date_obj)
+        except Exception as e:
+            logging.error(f"Erro em _calculate_astronomical_positions: {str(e)}")
+            return self._get_fallback_astronomical_data()
+            
+    def get_planetary_positions(self, date):
+        """Obtém posições planetárias"""
+        try:
+            if hasattr(self, 'astronomy') and hasattr(self.astronomy, 'get_planetary_positions'):
+                return self.astronomy.get_planetary_positions(date)
+            return self._get_basic_planetary_data(date)
+        except Exception as e:
+            print(f"Erro ao obter posições planetárias: {e}")
+            return {}
+    
+    def _get_basic_planetary_data(self, date):
+        """Dados planetários básicos como fallback"""
+        if hasattr(date, 'toPyDate'):
+            date = date.toPyDate()
+        days_since_epoch = (date - date(2012, 12, 21)).days
+        
+        return {
+            'sun': {
+                'position': (days_since_epoch % 365) / 365 * 360,
+                'cycle': '365 dias',
+                'phase': (days_since_epoch % 365) / 365
+            },
+            'venus': {
+                'position': (days_since_epoch % 584) / 584 * 360,
+                'cycle': '584 dias',
+                'phase': (days_since_epoch % 584) / 584
+            }
+        }
+
+    def _get_cultural_interpretations(self, date):
+        """Retorna significados culturais dos corpos celestes"""
+        from utils.mayan_math import get_mayan_interpretation
+    
+        return {
+            'interpretations': {
+                'sun': get_mayan_interpretation('sun', date),
+                'moon': get_mayan_interpretation('moon', date),
+                'venus': get_mayan_interpretation('venus', date),
+                'mars': get_mayan_interpretation('mars', date)
+            }
+        }
+
+    def _get_fallback_astronomical_data(self):
+        """Dados mínimos quando os cálculos falham"""
+        return {
+            'sun': {'position': 0, 'cycle': 365.25, 'phase': 0},
+            'moon': {'position': 0, 'cycle': 27.3, 'phase': 0},
+            'venus': {'position': 0, 'cycle': 584, 'phase': 0},
+            'error': 'Modo simplificado ativado'
+        }
+
+    def get_tzolkin_for_date(self, date):
+        """Versão robusta com tratamento de erros completo"""
+        # Verifica e recarrega dados se necessário
+        if not hasattr(self, 'tzolk_data') or not self.tzolk_data or 'nahuales' not in self.tzolk_data:
+            self._load_core_data_config()
+        
+            # Se ainda não tiver dados válidos após recarregar
+            if not self.tzolk_data or 'nahuales' not in self.tzolk_data:
+                logging.error("Dados Tzolk'in não disponíveis mesmo após recarregar")
+                return None
+
+        try:
+            day_number = self._calculate_tzolkin_day_number(date)
+            nahual_index = (day_number - 1) % 20
+        
+            # Verificação completa dos dados
+            if not isinstance(self.tzolk_data['nahuales'], list) or len(self.tzolk_data['nahuales']) < 20:
+                raise ValueError("Dados de nahuales incompletos ou formato inválido")
+            
+            nahual = self.tzolk_data['nahuales'][nahual_index]
+        
+            # Garante que todos os campos essenciais existam
+            return {
+                'nahual': {
+                    'nome': nahual.get('nome', f'Nahual {nahual_index + 1}'),
+                    'glifo': nahual.get('glifo', ''),
+                    'significado_tradicional': nahual.get('significado_tradicional', 'Significado não disponível'),
+                    'significado_quantico': nahual.get('significado_quantico', ''),
+                    'energia': str((day_number - 1) % 13 + 1),
+                    'frequencia': self._calculate_frequency(day_number),
+                    'cor': nahual.get('cor', '#6a3093')
+                },
+                'numero_tzolkin': day_number
+            }
+        
+        except Exception as e:
+            logging.error(f"Erro grave no cálculo Tzolk'in para {date}: {str(e)}", exc_info=True)
+            return {
+                'nahual': {
+                    'nome': 'Erro',
+                    'glifo': '',
+                    'significado_tradicional': 'Dados temporariamente indisponíveis',
+                    'significado_quantico': '',
+                    'energia': '0',
+                    'frequencia': '0Hz',
+                    'cor': '#FF0000'
+                },
+                'numero_tzolkin': 0
+            }
+
+    def _calculate_frequency(self, day_number):
+        """Calcula frequência baseada no número do dia"""
+        base_freq = 136.1  # Hz - Frequência base
+        return f"{base_freq * ((day_number % 20) + 1):.2f}Hz"
+
+    def get_tonalpohualli_for_date(self, py_date: datetime.date) -> Dict[str, Any]:
+        """Retorna informações do Tonalpohualli para uma data gregoriana."""
+        if hasattr(self.calendario_cosmico, 'get_tonalpohualli_details'):
+            return self.calendario_cosmico.get_tonalpohualli_details(py_date)
+        # print("AVISO: get_tonalpohualli_for_date não totalmente implementado no Connector.")
+        return {'signo': {'nome': 'Placeholder Tonal Signo'}, 'trecena': 'Y'}
+
+    def gregorian_to_long_count(self, py_date: datetime.date) -> str:
+        """Converte uma data gregoriana para a representação da Conta Longa."""
+        if hasattr(self.calendario_cosmico, 'convert_gregorian_to_long_count_str'):
+            return self.calendario_cosmico.convert_gregorian_to_long_count_str(py_date)
+        # print("AVISO: gregorian_to_long_count não totalmente implementado no Connector.")
+        return f"{py_date.year}.{py_date.month}.{py_date.day} (LC Placeholder)"
+        
+    def get_celestial_data(self, date):
+        """Obtém dados celestiais formatados para a interface"""
+        try:
+            if hasattr(date, 'toPyDate'):
+                date = date.toPyDate()
+            
+            # Obtém dados básicos do calendário
+            tzolkin_data = self.get_tzolkin_for_date(date)
+        
+            # Obtém dados astronômicos
+            cosmic_data = self.astronomy.get_cosmic_calendar(date)
+            venus_data = self.astronomy.calculate_galactic_venus_cycles(date)
+        
+            return {
+                'sun': {
+                    'position': cosmic_data.get('sun_position', 0),
+                    'energy': cosmic_data.get('solar_energy', 0),
+                    'significance': 'Kinich Ahau'
+                },
+                'venus': {
+                    'phase': venus_data.get('venus_phase', 0),
+                    'angular_dist': venus_data.get('angular_dist_gc', 0),
+                    'significance': 'Kukulkán'
+                },
+                'moon': {
+                    'phase': cosmic_data.get('moon_phase', 0),
+                    'day': cosmic_data.get('moon_day', 1),
+                    'significance': 'Ixchel'
+                },
+                'tzolkin': tzolkin_data
+            }
+        
+        except Exception as e:
+            self.logger.error(f"Erro em get_celestial_data: {str(e)}")
+            return self._get_fallback_celestial_data(date)
+
+    def _get_basic_celestial_data(self, date):
+        """Fallback básico quando os cálculos complexos falham"""
+        day_number = (date.toordinal() % 260) + 1  # Simula um ciclo Tzolk'in básico
+        return {
+            'sun': {
+                'distance': 0,
+                'azimuth': (day_number % 20) * 18,
+                'significance': 'Kinich Ahau (Sol)',
+                'energy': (day_number % 13) * 7.7
+            },
+            'venus': {
+                'distance': 0.7,
+                'azimuth': (day_number % 8) * 45,
+                'significance': 'Kukulkán (Vênus)',
+                'energy': (day_number % 20) * 5
+            },
+            'moon': {
+                'distance': 0.5,
+                'azimuth': (day_number % 28) * 12.8,
+                'significance': 'Ixchel (Lua)',
+                'phase': (day_number % 28) / 28 * 100
+            }
+        }
+
+    def _get_celestial_significance(self, body_name):
+        """Retorna o significado ancestral do corpo celeste"""
+        significances = {
+            'sun': 'Kinich Ahau - O Deus Sol',
+            'moon': 'Ixchel - A Deusa Lua',
+            'venus': 'Kukulkán - A Serpente Emplumada', 
+            'earth': 'Hunab Ku - O Doador de Movimento',
+            'mars': 'Guerreiro Vermelho'
+        }
+        return significances.get(body_name.lower(), '')
+    
+    def _get_fallback_celestial_data(self, date):
+        """Dados mínimos quando os cálculos falham"""
+        if hasattr(date, 'toPyDate'):
+            date = date.toPyDate()
+    
+        days_since_epoch = (date - datetime(2012, 12, 21).date()).days
+
+        return {
+            'sun': {
+                'position': (days_since_epoch % 365) / 365 * 360,
+                'energy': 50,
+                'significance': 'Kinich Ahau (modo básico)'
+            },
+            'venus': {
+                'phase': (days_since_epoch % 584) / 584,
+                'angular_dist': 180,
+                'significance': 'Kukulkán (modo básico)'
+            },
+            'moon': {
+                'phase': (days_since_epoch % 28) / 28,
+                'day': (days_since_epoch % 28) + 1,
+                'significance': 'Ixchel (modo básico)'
+            },
+            'tzolkin': {
+                'kin': (days_since_epoch % 260) + 1,
+                'warning': 'Dados em modo básico'
+            }
+        }
+        
+    def get_historical_events(self, start_year: int, end_year: int) -> list:
+        """Obtém eventos históricos com fallback robusto"""
+        # Verifica cache primeiro
+        if hasattr(self, '_historical_events'):
+            cached_events = [e for e in self._historical_events 
+                            if start_year <= e.get('year', 0) <= end_year]
+            if cached_events:
+                return cached_events
+
+        # Tenta carregar de diferentes fontes
+        sources = [
+            self._load_from_historical_module,
+            self._load_from_timeline_file,
+            self._get_essential_events
+        ]
+    
+        for source in sources:
+            try:
+                events = source()
+                if events:
+                    self._historical_events = events
+                    return [e for e in events 
+                           if start_year <= e.get('year', 0) <= end_year]
+            except Exception as e:
+                logging.warning(f"Fonte {source.__name__} falhou: {str(e)}")
+    
+        return []
+
+    def _load_from_historical_module(self) -> list:
+        """Tenta carregar via módulo histórico"""
+        historical_module = self._utils_modules.get('historical')
+        if historical_module and hasattr(historical_module, 'load_events_from_file'):
+            events_path = self.get_data_path('timeline_events.json')
+            return historical_module.load_events_from_file(events_path)
+        return []
+
+    def _load_from_timeline_file(self) -> list:
+        """Tenta carregar diretamente do arquivo"""
+        try:
+            with open(self.get_data_path('timeline_events.json'), 'r', encoding='utf-8') as f:
+                return json.load(f)
+        except Exception:
+            return []
+
+    def _get_essential_events(self) -> list:
+        """Retorna eventos essenciais como fallback"""
+        return [
+            {'year': 1325, 'title': 'Fundação de Tenochtitlán', 'description': 'Fundação da capital asteca'},
+            {'year': 1519, 'title': 'Chegada dos Espanhóis', 'description': 'Chegada de Hernán Cortés'},
+            {'year': 1521, 'title': 'Queda de Tenochtitlán', 'description': 'Fim do Império Asteca'},
+        ]
+
+    # --- Factory de Widgets (se mantido) ---
+    def create_widget(self, widget_type: str, *args: Any, **kwargs: Any) -> Optional[QWidget]: # Adicionado QWidget
+        """Factory method para criar widgets dinamicamente."""
+        from PyQt6.QtWidgets import QWidget # Import local para anotação de tipo
+        
+        if widget_type not in self._widget_classes:
+            self._load_widget_class(widget_type)
+            
+        widget_class = self._widget_classes.get(widget_type)
+        if widget_class:
+            try:
+                # Adiciona 'self' (o connector) automaticamente se o construtor do widget o aceitar
+                import inspect
+                sig = inspect.signature(widget_class.__init__)
+                if 'connector' in sig.parameters and 'connector' not in kwargs:
+                    kwargs['connector'] = self
+                
+                widget = widget_class(*args, **kwargs)
+                self.tempo_alterado.emit({'tipo': 'widget_criado', 'nome': widget_type}) # Exemplo de sinal
+                return widget
+            except Exception as e:
+                print(f"⚠️ Erro ao criar widget '{widget_type}': {e}")
+                return None
+        else:
+            print(f"AVISO: Tipo de widget desconhecido no factory: {widget_type}")
+            return None
+            
+    def _load_widget_class(self, widget_type: str):
+        """Carrega classes de widget dinamicamente."""
+        # Este método de carregamento dinâmico pode ser complexo de manter.
+        # Importações diretas no início do módulo são geralmente mais simples.
+        try:
+            if widget_type == 'CalendarWidget':
+                from interface.widgets.calendar_widget import CalendarWidget
+                self._widget_classes[widget_type] = CalendarWidget
+            elif widget_type == 'GlyphViewer':
+                from interface.widgets.glyph_viewer import GlyphViewer
+                self._widget_classes[widget_type] = GlyphViewer
+                
+            else:
+                print(f"Definição de carregamento para widget '{widget_type}' não encontrada.")
+                self._widget_classes[widget_type] = None
+        except ImportError as e:
+            print(f"⚠️ Falha na importação ao carregar classe de widget '{widget_type}': {e}")
+            self._widget_classes[widget_type] = None
+            
+    def _calculate_tzolkin_day_number(self, date):
+        """Calcula o número do dia no ciclo Tzolk'in (1-260)"""
+        try:
+            if not hasattr(self, 'tzolk_data'):
+                self._load_initial_data()
+        
+            epoch = datetime(2012, 12, 21).date()
+            delta = date - epoch
+            return (delta.days % 260) + 1  # 260 dias no ciclo Tzolk'in
+        
+        except Exception as e:
+            print(f"Erro no cálculo Tzolk'in: {e}")
+            return 1  # Fallback
+
+    # --- Outros Métodos (adaptados ou placeholders) ---
+    def calcular_ciclo_temporal(self, q_date: QDate, parametros: Optional[Dict[str, Any]] = None):
+        """Calcula ciclos temporais (placeholder, delegar ao calendario_cosmico)."""
+        py_date = q_date.toPyDate()
+        if hasattr(self.calendario_cosmico, 'calcular_ciclo_para_data'):
+            resultado = self.calendario_cosmico.calcular_ciclo_para_data(py_date, parametros)
+            self.ciclo_completo.emit({
+                'data_gregoriana': py_date.isoformat(),
+                'resultado_ciclo': resultado,
+                'parametros': parametros
+            })
+            return resultado
+        print(f"AVISO: calcular_ciclo_temporal não totalmente implementado para {py_date}")
+        return None
+
+    def get_timeline_events(self):
+        """Retorna eventos da linha do tempo"""
+        try:
+            timeline_path = os.path.join(self.get_data_path(), "timeline_events.json")
+            with open(timeline_path, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        except Exception as e:
+            print(f"Erro ao carregar timeline_events.json: {str(e)}")
+            return []
+    
+    def save_state(self):
+        """Salva o estado atual da aplicação (placeholder)."""
+        print("Connector: save_state chamado. Implementação pendente.")
+        # Ex: salvar self.current_qdate, configurações, etc.
+
+    # Método para atualizar a data corrente no connector, chamado pela MainWindow
+    def set_current_date(self, q_date: QDate):
+        if q_date.isValid():
+            self.current_qdate = q_date
+            # print(f"Connector: Data atual definida para {self.current_qdate.toString()}.")
+            # Você pode querer emitir um sinal aqui se outros componentes precisam saber
+            # self.tempo_alterado.emit({'tipo': 'data_alterada', 'data': self.current_qdate})
+   
+class QuantumCalculator(QThread):
+    calculation_done = pyqtSignal(dict)
+    
+    def __init__(self, date):
+        super().__init__()
+        self.date = date
+    
+    def run(self):
+        try:
+            # Cálculos pesados aqui
+            result = QuantumMayanMath.calculate_quantum_kin(self.date)
+            self.calculation_done.emit(result)
+        except Exception as e:
+            print(f"Erro no cálculo quântico: {e}")
+
+# No Connector principal:
+    def get_quantum_data_async(self, date, callback):
+        """Calcula dados quânticos em thread separada"""
+        self.quantum_thread = QuantumCalculator(date)
+        self.quantum_thread.calculation_done.connect(callback)
+        self.quantum_thread.start()         
+# Adicione esta classe ao seu connector.py
+
+class QuantumIntegrationSystem:
+    def __init__(self, connector):
+        self.connector = connector
+        self.quantum_state = {
+            'tzolkin_phase': 0.0,
+            'venus_phase': 0.0,
+            'galactic_alignment': 0.0,
+            'harmonic_convergence': 0.0
+        }
+    
+    def update_quantum_state(self, date):
+        """Atualiza todos os fatores quânticos para uma data"""
+        try:
+            # Obtém dados astronômicos
+            astronomy_data = self.connector.astronomy.get_cosmic_calendar(date)
+            venus_data = self.connector.astronomy.calculate_galactic_venus_cycles(date)
+            
+            # Atualiza o estado quântico
+            self.quantum_state.update({
+                'tzolkin_phase': astronomy_data.get('kin', 1) / 260,
+                'venus_phase': venus_data.get('venus_phase', 0),
+                'galactic_alignment': astronomy_data.get('galactic_alignment', 0),
+                'harmonic_convergence': astronomy_data.get('harmonic_convergence', 0)
+            })
+            
+            return self.quantum_state
+            
+        except Exception as e:
+            self.connector.logger.error(f"Erro ao atualizar estado quântico: {str(e)}")
+            # Fallback baseado em cálculos simples
+            days_since_epoch = (date - datetime(2012, 12, 21).date()).days
+            return {
+                'tzolkin_phase': (days_since_epoch % 260) / 260,
+                'venus_phase': (days_since_epoch % 584) / 584,
+                'galactic_alignment': math.sin(days_since_epoch / 365.25),
+                'harmonic_convergence': 0.5
+            }

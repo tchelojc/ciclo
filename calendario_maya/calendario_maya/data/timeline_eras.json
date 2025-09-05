@@ -1,0 +1,86 @@
+[
+  {
+    "name": "Hadeano",
+    "start": -4600,
+    "end": -4000,
+    "color": "#4b0082",
+    "event": "Formação da Terra e da crosta primitiva"
+  },
+  {
+    "name": "Arqueano",
+    "start": -4000,
+    "end": -2500,
+    "color": "#2e8b57",
+    "event": "Aparecimento das primeiras formas de vida e atmosfera primitiva"
+  },
+  {
+    "name": "Proterozoico",
+    "start": -2500,
+    "end": -541,
+    "color": "#4682b4",
+    "event": "Acúmulo de oxigênio e primeiras glaciações significativas"
+  },
+  {
+    "name": "Explosão Cambriana",
+    "start": -541,
+    "end": -485,
+    "color": "#00ced1",
+    "event": "Diversificação súbita de formas de vida marinha"
+  },
+  {
+    "name": "Extinção do Ordoviciano",
+    "start": -444,
+    "end": -443,
+    "color": "#008080",
+    "event": "Grande extinção em massa causada por glaciação rápida"
+  },
+  {
+    "name": "Extinção Devoniana",
+    "start": -372,
+    "end": -359,
+    "color": "#ffa07a",
+    "event": "Queda abrupta de oxigênio e perda de biodiversidade marinha"
+  },
+  {
+    "name": "Extinção Permo-Triássica",
+    "start": -252,
+    "end": -251,
+    "color": "#b22222",
+    "event": "Maior extinção em massa da Terra, 96% da vida marinha extinta"
+  },
+  {
+    "name": "Extinção dos Dinossauros (Cretáceo-Paleógeno)",
+    "start": -66,
+    "end": -65,
+    "color": "#ff4500",
+    "event": "Impacto de asteroide, vulcanismo intenso e mudança climática global"
+  },
+  {
+    "name": "Era do Paleoceno-Eoceno",
+    "start": -56,
+    "end": -34,
+    "color": "#daa520",
+    "event": "Período de aquecimento global súbito (PETM – Máximo Térmico do Paleoceno-Eoceno)"
+  },
+  {
+    "name": "Glaciação Quaternária",
+    "start": -2600000,
+    "end": -11700,
+    "color": "#add8e6",
+    "event": "Ciclo de eras glaciais, expansão e retração de geleiras"
+  },
+  {
+    "name": "Holoceno",
+    "start": -11700,
+    "end": 1950,
+    "color": "#98fb98",
+    "event": "Estabilidade climática pós-glacial, desenvolvimento da agricultura"
+  },
+  {
+    "name": "Antropoceno (proposto)",
+    "start": 1950,
+    "end": 9999,
+    "color": "#ff69b4",
+    "event": "Interferência humana no clima, aquecimento global e mudanças ambientais rápidas"
+  }
+]

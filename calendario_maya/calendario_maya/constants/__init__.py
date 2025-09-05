@@ -1,0 +1,17 @@
+# constants/__init__.py
+from .matematicas import *
+from .fisica import (
+    VELOCIDADE_LUZ, CONSTANTE_GRAVITACIONAL, CONSTANTE_PLANCK,
+    CONSTANTE_SOLAR, CONSTANTE_GALACTICA, MASSA_SOLAR, RAIO_SOLAR,
+    CICLO_MAIA, CICLO_AZTECA, ANO_GALACTICO, c, G, h,
+    MASSA_PADRAO, ANO_LUZ, GRAVIDADE_QUANTICA, FATOR_TEMPORAL_BASE,
+    RELACAO_LUA_TERRA, RELACAO_TERRA_SOL, RELACAO_SOL_GALAXIA,
+    FATOR_MAIA_AZTECA, FATOR_COSMICO
+)
+from .simbolos import *
+
+__all__ = [
+    'RELACAO_AUREA', 'PI_QUANTICO',  # De matematicas
+    'c', 'G', 'h', 'MASSA_PADRAO',   # De fisica
+    'LINHAGENS_INFO', 'VIBRACOES_BASE'  # De simbolos
+]
